@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Joi = require("joi");
 
-//create user schema
+//create User schema
 const userSchema = new Schema({
   name: {
     type: String,
@@ -26,11 +26,13 @@ const userSchema = new Schema({
   },
   avatar: {
     type: String,
-    required: true
   },
   registerDate: {
     type: Date,
     default: Date.now
+  },
+  lastLoginDate: {
+    type: Date
   }
 });
 

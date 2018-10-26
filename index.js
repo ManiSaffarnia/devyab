@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 
+//error-logging
+//require("./startup/error")();
+
 //database
 require("./startup/database")();
 
-//middleware
-require("./middleware/middleware")(app);
-
-//Route
+//Routes setup-> startup/route 
 require("./startup/route")(app);
 
-//Port setup
+//Port setup -> startup/port
 require("./startup/port")(app);
