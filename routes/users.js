@@ -6,8 +6,8 @@ const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const asynchMiddleware = require('../middleware/asynchMiddleware');
 const authorization = require('../middleware/authorization');
-
-
+const mail = require('../Mails/verificationMail');
+const jwt = require('jsonwebtoken');
 
 //============================================================================================== 
 //                                         REGISTER
@@ -54,8 +54,9 @@ router.post("/register", asynchMiddleware(async (req, res) => {
 
   //TODO - عکس کاربر رو هندل کنم**********
 
+
   //create a new user
-  const newUser = new User({
+  let newUser = await new User({
     name: req.body.name,
     email: req.body.email,
     password: hashedPassword,
@@ -63,11 +64,27 @@ router.post("/register", asynchMiddleware(async (req, res) => {
   });
 
   //save in database
+  //await newUser.save();
+
+  //create token
+  // jwt.sign({ user: _.pick(newUser, 'id') }, 'mani', (err, emailToken) => {
+  //   const url = `http://localhost:3000/api/users/verification/${emailToken}`;
+  //   mail(newUser.email, url);
+  // });
+
+  newUser.token = await jwt.sign({ user: _.pick(newUser, 'id') }, 'mani');
+
+  //save in database
   await newUser.save();
 
-  //send response
+  //send a verification Email
+  const url = `http://localhost:3000/api/users/verification/${newUser.token}`;
+  await mail(newUser.email, url);
+
+  //send response to client
   res.send(_.pick(newUser, ['_id', 'name', 'email']));
-}));
+
+}));//END
 
 
 //@route   POST api/users/register/googleAuth
@@ -82,6 +99,38 @@ router.post("/register/googleAuth");
 router.get("/register/googleAuth/callback", passport.authenticate("google"));
 
 
+//@route   GET api/users/verification/:token
+//@desc    verify user email address
+//@access  Private
+router.get('/verification/:token', async (req, res) => {
+  //take token from req.params
+  const { token } = req.params;
+
+  try {
+    //decode token
+    const decodeUser = jwt.verify(token, 'mani');
+
+    //find user by this id
+    const user = await User.findById(decodeUser.user.id);
+
+    if (user.token === token) {
+      //delete token from db and active user
+      const updatedUser = await User.findByIdAndUpdate(user.id, { $set: { token: null, isActive: true } }, { new: true });
+
+      //send response to user
+      res.json({
+        msg: 'اکانت شما فعال شد',
+        data: updatedUser
+      });
+    }
+    else {
+      return res.status(400).send('توکن فرستاده شده با توکن ذخیره شده متفاوت است');
+    }
+  }
+  catch (err) {
+    res.status(400).send('توکن فاقد اعتبار');
+  }
+});//END
 
 
 
@@ -135,6 +184,17 @@ router.post('/login', async (req, res) => {
         }
       });
   }
+
+  //chech user email verification
+  if (!user.isActive) return res
+    .status(400)
+    .json({
+      errorMessage: {
+        message: `User not Activated. please check your email`,
+        type: "verification error",
+        info: "کاربر ایمیل خودش رو تایید نکرده"
+      }
+    });
 
   //user dorost boode va bayad barash token dorost beshe 
   //generate token
