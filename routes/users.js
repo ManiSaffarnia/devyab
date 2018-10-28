@@ -21,6 +21,7 @@ router.get("/test", (req, res) => {
   });
 });
 
+
 //@route   POST api/users/register
 //@desc    Register a new User
 //@access  Public route
@@ -99,41 +100,6 @@ router.post("/register/googleAuth");
 router.get("/register/googleAuth/callback", passport.authenticate("google"));
 
 
-//@route   GET api/users/verification/:token
-//@desc    verify user email address
-//@access  Private
-router.get('/verification/:token', async (req, res) => {
-  //take token from req.params
-  const { token } = req.params;
-
-  try {
-    //decode token
-    const decodeUser = jwt.verify(token, 'mani');
-
-    //find user by this id
-    const user = await User.findById(decodeUser.user.id);
-
-    if (user.token === token) {
-      //delete token from db and active user
-      const updatedUser = await User.findByIdAndUpdate(user.id, { $set: { token: null, isActive: true } }, { new: true });
-
-      //send response to user
-      res.json({
-        msg: 'اکانت شما فعال شد',
-        data: updatedUser
-      });
-    }
-    else {
-      return res.status(400).send('توکن فرستاده شده با توکن ذخیره شده متفاوت است');
-    }
-  }
-  catch (err) {
-    res.status(400).send('توکن فاقد اعتبار');
-  }
-});//END
-
-
-
 //============================================================================================== 
 //                                         LOGIN
 //==============================================================================================
@@ -208,14 +174,42 @@ router.post('/login', async (req, res) => {
 
 
 //============================================================================================== 
-//                                         INFORMATION
+//                                         EMAIL VERIFICATION
 //==============================================================================================
-//@route   POST api/users/me
-//@desc    Get login user information
-//@access  Private route
-router.get('/me', authorization, async (req, res) => {
-  const user = await User.findById(req.user.id);
-  res.json(_.pick(user, ['id', 'name', 'email', 'avatar', 'registerDate', 'isActive']));
-});
+//@route   GET api/users/verification/:token
+//@desc    verify user email address
+//@access  Private
+router.get('/verification/:token', async (req, res) => {
+  //take token from req.params
+  const { token } = req.params;
+
+  try {
+    //decode token
+    const decodeUser = jwt.verify(token, 'mani');
+
+    //find user by this id
+    const user = await User.findById(decodeUser.user.id);
+
+    if (user.token === token) {
+      //delete token from db and active user
+      const updatedUser = await User.findByIdAndUpdate(user.id, { $set: { token: null, isActive: true } }, { new: true });
+
+      //send response to user
+      /*TODO: REDIRECT USER TO LOGIN PAGE */
+      res.json({
+        msg: 'اکانت شما فعال شد',
+        data: updatedUser
+      });
+    }
+    else {
+      return res.status(400).send('توکن فرستاده شده با توکن ذخیره شده متفاوت است');
+    }
+  }
+  catch (err) {
+    res.status(400).send('توکن فاقد اعتبار');
+  }
+});//END
+
+
 
 module.exports = router;
