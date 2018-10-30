@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'user',
+    required: true
   },
   handle: {
     type: String,
@@ -146,6 +148,7 @@ const profileValidation = (input) => {
     instagram: Joi.string()
   };
   const profileSchema = {
+    user: Joi.objectId().required(),
     handle: Joi.string().max(40).required(),
     company: Joi.string(),
     location: Joi.string(),
@@ -158,7 +161,7 @@ const profileValidation = (input) => {
     social: Joi.object(social)
   }
 
-  return Joi.validate(input, profileSchema);
+  return Joi.validate(input, profileSchema, { abortEarly: false });
 }
 
 //profile model

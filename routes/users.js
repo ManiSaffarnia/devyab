@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { User, userValidation, loginValidation } = require("../models/User");
+const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
+const { User } = require("../models/User");
 const asynchMiddleware = require('../middleware/asynchMiddleware');
-const authorization = require('../middleware/authorization');
 const mail = require('../Mails/verificationMail');
-const jwt = require('jsonwebtoken');
+const loginValidation = require('../validation/login');
+const registerValidation = require('../validation/register');
 
 //============================================================================================== 
 //                                         REGISTER
@@ -27,17 +28,13 @@ router.get("/test", (req, res) => {
 //@access  Public route
 router.post("/register", asynchMiddleware(async (req, res) => {
   //validate user input
-  const { error } = userValidation(req.body);
-  if (error)
-    return res
-      .status(400)
-      .json({
-        errorMessage: {
-          message: `wrong user information format: ${error.details[0].message}`,
-          type: "validation error",
-          info: "کاربر اطلاعات ضروری رو نفرستاده و یا با فرمت غلط فرستاده"
-        }
-      });
+  const { errors, isValid } = registerValidation(req.body);
+
+  if (!isValid) {
+    res.status(400).json({
+      errorMessage: errors
+    });
+  }
 
   //check email existance
   const user = await User.findOne({ email: req.body.email });
@@ -64,15 +61,7 @@ router.post("/register", asynchMiddleware(async (req, res) => {
     avatar: 'temp_template'
   });
 
-  //save in database
-  //await newUser.save();
-
-  //create token
-  // jwt.sign({ user: _.pick(newUser, 'id') }, 'mani', (err, emailToken) => {
-  //   const url = `http://localhost:3000/api/users/verification/${emailToken}`;
-  //   mail(newUser.email, url);
-  // });
-
+  //create token for Email verification
   newUser.token = await jwt.sign({ user: _.pick(newUser, 'id') }, 'mani');
 
   //save in database
@@ -107,18 +96,14 @@ router.get("/register/googleAuth/callback", passport.authenticate("google"));
 //@desc    Login a User and return TOKEN
 //@access  Public route
 router.post('/login', async (req, res) => {
+
+  if (req.header('x-auth-token')) return res.status(400).send({ errorMessage: "شما یک توکن دارید و نیازی به ایجاد توکن جدید ندارید" });
+
   //input validation
-  const { error } = loginValidation(req.body);
-  if (error)
-    return res
-      .status(400)
-      .json({
-        errorMessage: {
-          message: `Username and Password are required: ${error.details[0].message}`,
-          type: "validation error",
-          info: "کاربر اطلاعات  رو خالی گذاشته"
-        }
-      });
+  const { errors, isValid } = loginValidation(req.body);
+  if (!isValid) {
+    res.status(400).json(errors);
+  }
 
   const email = req.body.email;
   const password = req.body.password;
@@ -182,6 +167,7 @@ router.post('/login', async (req, res) => {
 router.get('/verification/:token', async (req, res) => {
   //take token from req.params
   const { token } = req.params;
+  if (!token) return res.status(400).send('توکنی ارسال نشده است. توکن نمیتواند خالی باشد');
 
   try {
     //decode token
