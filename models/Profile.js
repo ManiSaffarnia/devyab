@@ -43,6 +43,10 @@ const profileSchema = new Schema({
         type: String,
         required: true
       },
+      location: {
+        type: String,
+        required: true
+      },
       startDate: {
         type: Date,
         required: true

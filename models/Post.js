@@ -1,9 +1,84 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const postSchema = new Schema({});
+/**post schema:
+ * user => type: schema
+ *         id,name,avatar
+ * text => string, required
+ * comments => array
+ * likes => array
+ * date => date
+ */
 
-//post validation
+const postSchema = new Schema({
+  user: {
+    type: new Schema({
+      id: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+      },
+      name: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 5,
+        maxlength: 50
+      },
+      avatar: {
+        type: String
+      }
+    }),
+    required: true
+  },
+  text: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 250
+  },
+  comment: [{
+    text: {
+      type: String,
+      trim: true,
+      required: true,
+      maxlength: 150
+    },
+    user: {
+      type: new Schema({
+        id: {
+          type: Schema.Types.ObjectId,
+          ref: 'user'
+        },
+        name: {
+          type: String,
+          required: true,
+          trim: true,
+          minlength: 5,
+          maxlength: 50
+        },
+        avatar: {
+          type: String
+        }
+      })
+    },
+    date: {
+      type: Date,
+      default: Date.now
+    }
+  }],
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+      }
+    }
+  ],
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
 
 //post model
 const Post = mongoose.model("post", postSchema);
