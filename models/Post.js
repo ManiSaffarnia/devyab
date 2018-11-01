@@ -26,7 +26,8 @@ const postSchema = new Schema({
       },
       avatar: {
         type: String
-      }
+      },
+      _id: false
     }),
     required: true
   },
@@ -36,42 +37,46 @@ const postSchema = new Schema({
     trim: true,
     maxlength: 250
   },
-  comment: [{
-    text: {
-      type: String,
-      trim: true,
-      required: true,
-      maxlength: 150
-    },
-    user: {
-      type: new Schema({
-        id: {
-          type: Schema.Types.ObjectId,
-          ref: 'user'
-        },
-        name: {
-          type: String,
-          required: true,
-          trim: true,
-          minlength: 5,
-          maxlength: 50
-        },
-        avatar: {
-          type: String
-        }
-      })
-    },
-    date: {
-      type: Date,
-      default: Date.now
+  comment: [
+    {
+      text: {
+        type: String,
+        trim: true,
+        required: true,
+        maxlength: 150
+      },
+      user: {
+        type: new Schema({
+          id: {
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+          },
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+            minlength: 5,
+            maxlength: 50
+          },
+          avatar: {
+            type: String
+          },
+          _id: false
+        })
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
     }
-  }],
+  ],
   likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
         ref: 'user'
-      }
+      },
+      _id: false
     }
   ],
   date: {

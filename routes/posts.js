@@ -7,6 +7,7 @@ const { Post } = require('../models/Post');
 const { User } = require('../models/User');
 const asynchMiddleware = require('../middleware/asynchMiddleware');
 const postValidation = require('../validation/post');
+const commentValidation = require('../validation/comment');
 
 //@route   GET api/posts/test
 //@desc    Tests kardan functionality in route
@@ -103,6 +104,7 @@ router.put("/:postID", authorization, asynchMiddleware(async (req, res) => {
   const postID = req.params.postID;
   if (!postID || !obejectID.isValid(postID)) return res.status(400).json({ errorMessage: "آیدی پست مربوطه ارسال نشده و یا غیر معتبر است" });
 
+  //get inputs
   const input = _.pick(req.body, ['text']);
   input.user = req.user.id;
 
@@ -151,11 +153,134 @@ router.delete("/:postID", authorization, asynchMiddleware(async (req, res) => {
 //=========================================================================================================
 //                                                COMMENT
 //=========================================================================================================
+/*ADD COMMENT */
+//@route   POST api/posts/comment/:postID
+//@desc    add comment to a post with certain id
+//@access  Private
+router.post("/comment/:postID", authorization, asynchMiddleware(async (req, res) => {
+  const postID = req.params.postID;
+  if (!postID || !obejectID.isValid(postID)) return res.status(400).json({ errorMessage: "آیدی پست مربوطه ارسال نشده و یا غیر معتبر است" });
+
+  //get inputs
+  const input = _.pick(req.body, ['text', 'name', 'avatar']);
+  input.userID = req.user.id;
+
+  //input validation
+  const { errors, isValid } = commentValidation(input);
+  if (!isValid) return res.status(400).json({ errorMessage: errors });
+
+  //find the post
+  const post = await Post.findById(postID);
+  if (!post) return res.status(404).json({ errorMessage: "چنین پستی یافت نشد" });
+
+  //create new comment object
+  const commentData = {
+    text: input.text,
+    user: {
+      id: input.userID,
+      name: input.name,
+      avatar: input.avatar
+    }
+  };
+
+  //add new comment to the post's comment array
+  post.comment.push(commentData);
+
+  //save to database
+  await post.save();
+
+  //send response
+  res.json(post);
+}));//END ADD COMMENT
+
+
+
+/*REMOVE COMMENT */
+//@route   DELETE api/posts/comment/:postID/:commentID
+//@desc    remove comment with a certain id from a post with certain id
+//@access  Private
+router.delete("/comment/:postID/:commentID", authorization, asynchMiddleware(async (req, res) => {
+  const postID = req.params.postID;
+  if (!postID || !obejectID.isValid(postID)) return res.status(400).json({ errorMessage: "آیدی پست مربوطه ارسال نشده و یا غیر معتبر است" });
+
+  const commentID = req.params.commentID
+  if (!commentID || !obejectID.isValid(commentID)) return res.status(400).json({ errorMessage: "آیدی کامنت مربوطه ارسال نشده و یا غیر معتبر است" });
+
+  //find the post
+  const post = await Post.findById(postID);
+  if (!post) return res.status(404).json({ errorMessage: "چنین پستی یافت نشد" });
+
+  //find the user
+  const user = await User.findById(req.user.id);
+  if (!user) return res.status(404).json({ errorMessage: "چنین کاربری یافت نشد" });
+
+  //find the comment in comments array
+  const targetComment = post.comment.findIndex((eachcomment) => {
+    return eachcomment.id.toString() === commentID
+  });
+
+  //check if this comment exist in this post comments array
+  if (targetComment === -1) return res.status(404).json({ errorMessage: 'چنین کامنتی یافت نشد' });
+
+  //check if user is the owner of the comment //TODO or the owner of the post*********
+  if (post.comment[targetComment].user.id.toString() !== req.user.id) return res.status(401).json({ errorMessage: 'شما امکان پاک کردن این کامنت را ندارید' });
+
+  //remove commetn from comments array
+  post.comment.splice(targetComment, 1);
+
+  //save to database
+  await post.save();
+
+  //send response
+  res.json(post);
+}));//END ADD COMMENT
+
+
 
 //=========================================================================================================
 //                                                Likes
 //=========================================================================================================
+/*ADD/REMOVE LIKE */
+//@route   POST api/posts/like/:postID
+//@desc    add/Remove like to a post with certain id
+//@access  Private
+router.post("/like/:postID", authorization, asynchMiddleware(async (req, res) => {
+  const postID = req.params.postID;
+  if (!postID || !obejectID.isValid(postID)) return res.status(400).json({ errorMessage: "آیدی پست مربوطه ارسال نشده و یا غیر معتبر است" });
+
+  const userID = req.user.id;
+  if (!userID || !obejectID.isValid(userID)) return res.status(400).json({ errorMessage: "آیدی کاربری که میخواد لایک کنه ارسال نشده و یا غیر معتبر است" });
+
+  //find the post
+  const post = await Post.findById(postID);
+  if (!post) return res.status(404).json({ errorMessage: "چنین پستی یافت نشد" });
+
+  //check if this user like this post before or not
+  const likeIndex = post.likes.findIndex((like) => {
+    return like.user.toString() === userID;
+  });
+
+  //check if this user like this post before or not
+  if (likeIndex !== -1) {
+    //yani ghablan like karde. alan unlike mikonim
+    post.likes.splice(likeIndex, 1);
+    await post.save();
+    return res.json(post);
+  }
+
+  //yani ghablan like nakarde va alan mikhad like kone
+  //add to likes array
+  post.likes.push({ user: userID });
+
+  //save to database
+  await post.save();
+
+  //send response
+  res.json(post);
+}));
 
 
 
+
+//export
 module.exports = router;
