@@ -31,7 +31,7 @@ router.post("/register", asynchMiddleware(async (req, res) => {
   const { errors, isValid } = registerValidation(req.body);
 
   if (!isValid) {
-    res.status(400).json({
+    return res.status(400).json({
       errorMessage: errors
     });
   }
@@ -72,9 +72,9 @@ router.post("/register", asynchMiddleware(async (req, res) => {
   await mail(newUser.email, url);
 
   //send response to client
-  res.send(_.pick(newUser, ['_id', 'name', 'email']));
+  res.json(_.pick(newUser, ['_id', 'name', 'email']));
 
-}));//END
+}));//END CREATE USER
 
 
 //@route   POST api/users/register/googleAuth

@@ -1,17 +1,45 @@
-body{
-  height: 100vh;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 img {
   width: 100%;
 }
 
+.custom-container,.App,.root{
+  height: 100vh;
+}
+.login,.register{
+  height: 73.3%;
+  margin-top: 5rem;
+}
+.custom-navbar{
+  height: 5.8%;
+}
+.custom-footer{
+  height: 7.5%;
+}
+
+
 .landing {
   position: relative;
   background: url('./img/showcase.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 87vh;
   margin-top: -24px;
   margin-bottom: -50px;
 }

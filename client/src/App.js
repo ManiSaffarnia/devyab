@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import AppRouter from './routers/AppRouters';
+
+//CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './styles/style.scss';
-import Footer from './components/layout/Footer';
-import Landing from './components/layout/Landing';
-import Navbar from './components/layout/Navbar';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Navbar />
-        <Landing />
-        <Footer />
-      </div>
-    );
-  }
-}
+
+
+const App = () => (
+  <div className="App">
+    <AppRouter />
+  </div>
+
+);
 
 export default App;

@@ -1,17 +1,25 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import App from '../App';
+import Footer from '../components/layout/Footer';
+import Landing from '../components/layout/Landing';
+import Navbar from '../components/layout/Navbar';
 import NotFound from '../components/NotFound';
+import Register from '../components/auth/Register';
+import Login from '../components/auth/Login';
 
 const AppRouter = () => (
     <BrowserRouter>
-        <div>
+        <React.Fragment>
+            <Navbar />
             <Switch>
-                <Route path="/" component={App} exact />
-
+                <Route path="/" component={Landing} exact />
+                <Route path="/register" component={Register} />
+                <Route path="/login" component={Login} />
                 <Route component={NotFound} />
             </Switch>
-        </div>
+            <Footer />
+        </React.Fragment>
+
     </BrowserRouter>
 );
 
