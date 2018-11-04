@@ -45,7 +45,10 @@ module.exports = (data) => {
     /*PASSWORD_CONFRIM*/
     if (isEmpty(passwordConfirm)) errors.passwordConfirm = 'تایید گذرواژه نمیتواند خالی باشد';
     else {
-        if (password !== passwordConfirm) errors.passwordConfirm = 'پسورد و تایید پسورد مطابقت ندارند';
+        if (password !== passwordConfirm) {
+            errors.password = 'پسورد و تایید پسورد مطابقت ندارند';
+            errors.passwordConfirm = 'پسورد و تایید پسورد مطابقت ندارند';
+        }
     }
 
 

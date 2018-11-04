@@ -102,7 +102,7 @@ router.post('/login', async (req, res) => {
   //input validation
   const { errors, isValid } = loginValidation(req.body);
   if (!isValid) {
-    res.status(400).json(errors);
+    return res.status(400).json({ errorMessage: errors });
   }
 
   const email = req.body.email;

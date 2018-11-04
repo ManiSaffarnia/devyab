@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { startRegister } from '../../actions/auth';
 
 class Register extends Component {
 
@@ -11,15 +12,25 @@ class Register extends Component {
         errors: {}
     }
 
+    //life Cycle method
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState(() => ({ errors: nextProps.errors }));
+        }
+    }//END
 
+
+    //On Input Change handler
     onInputChangeHandler = (e) => {
         const inputData = e.target.value;
         const inputFieldName = e.target.name;
         this.setState(() => (
             { [inputFieldName]: inputData }
         ));
-    }//end InputChange
+    }//End
 
+
+    //On Submit Handler
     onSubmitHandler = async (e) => {
         e.preventDefault();
 
@@ -34,27 +45,9 @@ class Register extends Component {
         }
 
         //send to our server
-        try {
-            const result = await axios.post('/api/users/register', newUser);
-            if (result.status === 200) {
-                //reset inputs
-                document.getElementsByName('name')[0].value = '';
-                document.getElementsByName('email')[0].value = '';
-                document.getElementsByName('password')[0].value = '';
-                document.getElementsByName('passwordConfirm')[0].value = '';
+        this.props.startRegister(newUser, this.props.history);
+    }//End
 
-                //show flash message
-
-            }
-        } catch (ex) {
-            console.log("خوردیم به بشکه! : ", ex.response);
-            //show error
-            const { errorMessage } = ex.response.data
-            if (errorMessage) { //yani validation error dashtim
-                this.setState(() => ({ errors: errorMessage }));
-            }
-        }
-    }//end onSubmit
 
     render() {
         return (
@@ -88,7 +81,21 @@ class Register extends Component {
                 </div>
             </div>
         )
-    }
-}
+    }//END RENDER
 
-export default Register;
+
+}//END COMPONENT
+
+
+//mapStateToProps
+const mapStateToProps = (state) => ({
+    errors: state.errors.errorMessage
+});
+
+//mapDispatchToProps
+const mapDispatchToProps = (dispatch) => ({
+    startRegister: (data, history) => dispatch(startRegister(data, history))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
