@@ -19,6 +19,10 @@ img {
   width: 100%;
 }
 
+a{
+  cursor: pointer;
+}
+
 .custom-container,.App,.root{
   height: 100vh;
 }
@@ -40,7 +44,6 @@ img {
   background-size: cover;
   background-position: center;
   height: 87vh;
-  margin-top: -24px;
   margin-bottom: -50px;
 }
 

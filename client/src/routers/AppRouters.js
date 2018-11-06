@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PrivateRoute from '../routers/PrivateRoute';
+import PublicRoute from '../routers/PublicRoute';
+import Dashboard from '../components/Dashboard';
 import Footer from '../components/layout/Footer';
 import Landing from '../components/layout/Landing';
 import Navbar from '../components/layout/Navbar';
@@ -13,8 +16,9 @@ const AppRouter = () => (
             <Navbar />
             <Switch>
                 <Route path="/" component={Landing} exact />
-                <Route path="/register" component={Register} />
-                <Route path="/login" component={Login} />
+                <PrivateRoute path="/dashboard" component={Dashboard} exact />
+                <PublicRoute path="/register" component={Register} />
+                <PublicRoute path="/login" component={Login} />
                 <Route component={NotFound} />
             </Switch>
             <Footer />

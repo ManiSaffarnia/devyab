@@ -2,9 +2,9 @@ import axios from 'axios';
 import { setErrors } from './errors';
 import setAuthToken from '../utils/setAuthToken';
 
+
+//start register a user
 export const startRegister = ({ name = '', email = '', password = '', passwordConfirm = '' } = {}, history) => {
-
-
     return async (dispatch) => {
         const newUser = {
             name,
@@ -17,7 +17,11 @@ export const startRegister = ({ name = '', email = '', password = '', passwordCo
             const result = await axios.post('/api/users/register', newUser);
 
             if (result.status === 200) {
-                history.push('/login');
+
+                history.push({
+                    pathname: '/login',
+                    state: { flashMessage: 'Your account was created. Please verify your email first, and then login' }
+                })
             }
         }
         catch (ex) {
@@ -33,6 +37,11 @@ export const setUser = (user) => ({
     user
 });//END
 
+//SET FLASH MESSAGE
+export const flashMessage = (data) => ({
+    type: 'SET_FLASH_MESSAGE',
+    data
+});//END
 
 //REGISTER action generator
 export const registerAction = (user) => ({
@@ -81,4 +90,29 @@ export const startLogin = ({ email = '', password = '' } = {}) => {
 export const loginUser = (user) => ({
     type: 'SET_LOGIN_USER',
     user
+});//END
+
+
+
+//===============================================================================================
+//                                          LOGOUT
+//===============================================================================================
+//start logout user
+export const startLogout = () => {
+    //remove token form local storage
+    localStorage.removeItem('jwtToken-devyab');
+
+    //remove token from header
+    setAuthToken();
+
+    //dispatch to logout action
+    return (dispatch) => {
+        dispatch(logout());
+    }
+}//END
+
+
+//logout User 
+export const logout = () => ({
+    type: 'LOGOUT'
 });//END
