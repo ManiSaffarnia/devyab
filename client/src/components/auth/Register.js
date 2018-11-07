@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { startRegister } from '../../actions/auth';
 import { registerValidation, registerRealTimeValidation } from '../../validation/register';
 import isEmpty from '../../validation/isEmpty';
+import TextFieldGroup from '../form-component/TextFieldGroup';
+
 
 class Register extends Component {
 
@@ -82,22 +84,50 @@ class Register extends Component {
                             <h1 className="display-4 text-center">Sign Up</h1>
                             <p className="lead text-center">Create your DevYab account</p>
                             <form onSubmit={this.onSubmitHandler} noValidate>
-                                <div className="form-group">
-                                    <input type="text" onChange={this.onInputChangeHandler} onInput={this.onInputInputHandler} className={(!this.state.errors.name ? "form-control form-control-lg" : "form-control form-control-lg is-invalid")} placeholder="Name" name="name" value={this.state.name} />
-                                    {this.state.errors.name && <div className="invalid-feedback">{this.state.errors.name}</div>}
-                                </div>
-                                <div className="form-group">
-                                    <input type="email" onChange={this.onInputChangeHandler} onInput={this.onInputInputHandler} className={!this.state.errors.email ? "form-control form-control-lg" : "is-invalid form-control form-control-lg"} placeholder="Email Address" name="email" value={this.state.email} />
-                                    {this.state.errors.email && <div className="invalid-feedback">{this.state.errors.email}</div>}
-                                </div>
-                                <div className="form-group">
-                                    <input type="password" onChange={this.onInputChangeHandler} onInput={this.onInputInputHandler} className={!this.state.errors.password ? "form-control form-control-lg" : "is-invalid form-control form-control-lg"} placeholder="Password" name="password" value={this.state.password} />
-                                    {this.state.errors.password && <div className="invalid-feedback">{this.state.errors.password}</div>}
-                                </div>
-                                <div className="form-group">
-                                    <input type="password" onChange={this.onInputChangeHandler} onInput={this.onInputInputHandler} className={!this.state.errors.passwordConfirm ? "form-control form-control-lg" : "is-invalid form-control form-control-lg"} placeholder="Confirm Password" name="passwordConfirm" value={this.state.passwordConfirm} />
-                                    {this.state.errors.passwordConfirm && <div className="invalid-feedback">{this.state.errors.passwordConfirm}</div>}
-                                </div>
+                                <TextFieldGroup
+                                    type="text"
+                                    name="name"
+                                    placeholder="Name"
+                                    className="form-control form-control-lg"
+                                    value={this.state.name}
+                                    error={this.state.errors.name}
+                                    onChange={this.onInputChangeHandler}
+                                    onInput={this.onInputInputHandler}
+                                />
+
+                                <TextFieldGroup
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email Address"
+                                    className="form-control form-control-lg"
+                                    value={this.state.email}
+                                    error={this.state.errors.email}
+                                    onChange={this.onInputChangeHandler}
+                                    onInput={this.onInputInputHandler}
+                                />
+
+                                <TextFieldGroup
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    className="form-control form-control-lg"
+                                    value={this.state.password}
+                                    error={this.state.errors.password}
+                                    onChange={this.onInputChangeHandler}
+                                    onInput={this.onInputInputHandler}
+                                />
+
+                                <TextFieldGroup
+                                    type="password"
+                                    name="passwordConfirm"
+                                    placeholder="Password Confirmation"
+                                    className="form-control form-control-lg"
+                                    value={this.state.passwordConfirm}
+                                    error={this.state.errors.passwordConfirm}
+                                    onChange={this.onInputChangeHandler}
+                                    onInput={this.onInputInputHandler}
+                                />
+
                                 <input type="submit" className="btn btn-info btn-block mt-4" disabled={!isEmpty(this.state.errors)} />
                             </form>
                         </div>

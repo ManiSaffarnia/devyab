@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 
 module.exports = (req, res, next) => {
+    console.log(req.header);
     const token = req.header('x-auth-token');
 
     if (!token) return res.status(401).json({ msg: 'unAuthorized! login konid' });

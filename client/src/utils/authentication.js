@@ -10,7 +10,7 @@ const authentication = () => {
         const decodedData = jwt.verify(token, 'mani');
 
         //check expiration time
-        const now = new Date.now() / 1000;
+        const now = Date.now() / 1000;
 
         if (decodedData.exp < now) {
             //token expire shode
@@ -25,6 +25,7 @@ const authentication = () => {
         return decodedData;
     }
     catch (ex) {
+        console.log(ex);
         console.log('verify nashod');
         localStorage.removeItem('jwtToken-devyab');
         return false

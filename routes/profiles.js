@@ -25,7 +25,7 @@ router.get("/test", (req, res) => {
 //@access  Private route
 router.get('/me', authorization, asynchMiddleware(async (req, res) => {
   const userProfile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']); //profile useri ro ke id oon dakhel token miarim
-  if (!userProfile) return res.status(404).json({ errorMessage: "پروفایلی شما ثبت نشده است، لطفا از طریق لینک پروفایل خود را تکمیل کنید" });
+  if (!userProfile) return res.status(404).json({ errorMessage: "پروفایلی شما ثبت نشده است، لطفا از طریق لینک پروفایل خود را تکمیل کنید", noProfile: true });
 
   res.json(userProfile);
 }));//END MY PROFILE

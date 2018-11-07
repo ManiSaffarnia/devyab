@@ -80,7 +80,10 @@ export const startLogin = ({ email = '', password = '' } = {}) => {
         }
         catch (ex) {
             //dispatch mikonim be error
-            dispatch(setErrors(ex.response.data));
+            if (ex.response.data) dispatch(setErrors(ex.response.data));
+            else {
+                console.log(ex);
+            }
         }
     }
 }//END
