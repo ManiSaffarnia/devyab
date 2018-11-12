@@ -117,6 +117,22 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
+
+
+                {this.props.isLoading && (
+                    <div className="myLoading">
+                        <div className="spinnerContainer">
+                            <div className="mySpinner">
+                                <div className="sk-folding-cube">
+                                    <div className="sk-cube1 sk-cube"></div>
+                                    <div className="sk-cube2 sk-cube"></div>
+                                    <div className="sk-cube4 sk-cube"></div>
+                                    <div className="sk-cube3 sk-cube"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         );
     }//END RENDER
@@ -126,6 +142,7 @@ class Login extends Component {
 
 
 const mapStateToProps = (state) => ({
+    isLoading: state.profiles.loading,
     auth: state.auth,
     errors: state.errors
 });

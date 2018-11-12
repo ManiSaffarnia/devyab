@@ -5,6 +5,9 @@ import App from './App';
 import configStore from './store/storeConfig';
 import authentication from './utils/authentication';
 import { loginUser, logout } from './actions/auth';
+import { startGetUserProfile } from './actions/profiles';
+import Loading from './components/Loading';
+
 //create an store
 const store = configStore();
 
@@ -27,7 +30,7 @@ const renderApp = () => {
 
 
 //LOADING PAGE
-ReactDOM.render(<p>LOADING...</p>, document.getElementById('root'));
+ReactDOM.render(<Loading />, document.getElementById('root'));
 
 
 //auth process

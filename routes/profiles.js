@@ -78,9 +78,8 @@ router.get('/all', asynchMiddleware(async (req, res) => {
 //@access  Private route
 router.post('/me', authorization, asynchMiddleware(async (req, res) => {
 
-  const input = _.pick(req.body, ['handle', 'company', 'location', 'jobStatus', 'skills', 'bio', 'github', 'youtube', 'facebook', 'instagram', 'twitter', 'linkedin']);
+  const input = _.pick(req.body, ['handle', 'company', 'website', 'location', 'jobStatus', 'skills', 'bio', 'github', 'youtube', 'facebook', 'instagram', 'twitter', 'linkedin']);
   input.user = req.user.id;
-
   //input validation
   const { errors, isValid } = profileValidation(input);
   if (!isValid) return res.status(400).json({ errorMessage: errors }); //valisation failed
@@ -90,8 +89,9 @@ router.post('/me', authorization, asynchMiddleware(async (req, res) => {
 
   //create new profile data 
   const newProfileData = createProfileData(input);
+  console.log(newProfileData);
   const newProfile = await new Profile(newProfileData);
-
+  console.log(newProfile);
   //save in database 
   await newProfile.save();
 
@@ -106,7 +106,8 @@ router.post('/me', authorization, asynchMiddleware(async (req, res) => {
 //@desc    Update a profile
 //@access  Private route
 router.put('/me', authorization, asynchMiddleware(async (req, res) => {
-  const input = _.pick(req.body, ['handle', 'company', 'location', 'jobStatus', 'skills', 'bio', 'github', 'youtube', 'facebook', 'instagram', 'twitter', 'linkedin']);
+  console.log(req.body);
+  const input = _.pick(req.body, ['handle', 'company', 'location', 'website', 'jobStatus', 'skills', 'bio', 'github', 'youtube', 'facebook', 'instagram', 'twitter', 'linkedin']);
   input.user = req.user.id;
 
   //input validation

@@ -5,7 +5,6 @@ import { registerValidation, registerRealTimeValidation } from '../../validation
 import isEmpty from '../../validation/isEmpty';
 import TextFieldGroup from '../form-component/TextFieldGroup';
 
-
 class Register extends Component {
 
     state = {
@@ -39,7 +38,7 @@ class Register extends Component {
         const inputFieldName = e.target.name;
         const { isValid, error } = registerRealTimeValidation(inputFieldName, inputData, this.state.password);
         if (!isValid) this.setState((preState) => ({ errors: { ...preState.errors, ...error } }));
-        else {
+        else {//validation passed
             this.setState((preState) => {
                 const clearedError = { ...preState.errors };
                 delete clearedError[inputFieldName];
@@ -76,65 +75,79 @@ class Register extends Component {
 
 
     render() {
-        return (
-            <div className="register">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Sign Up</h1>
-                            <p className="lead text-center">Create your DevYab account</p>
-                            <form onSubmit={this.onSubmitHandler} noValidate>
-                                <TextFieldGroup
-                                    type="text"
-                                    name="name"
-                                    placeholder="Name"
-                                    className="form-control form-control-lg"
-                                    value={this.state.name}
-                                    error={this.state.errors.name}
-                                    onChange={this.onInputChangeHandler}
-                                    onInput={this.onInputInputHandler}
-                                />
+        return (<div className="register">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-8 m-auto">
+                        <h1 className="display-4 text-center">Sign Up</h1>
+                        <p className="lead text-center">Create your DevYab account</p>
+                        <form onSubmit={this.onSubmitHandler} noValidate>
+                            <TextFieldGroup
+                                type="text"
+                                name="name"
+                                placeholder="Name"
+                                className="form-control form-control-lg"
+                                value={this.state.name}
+                                error={this.state.errors.name}
+                                onChange={this.onInputChangeHandler}
+                                onInput={this.onInputInputHandler}
+                            />
 
-                                <TextFieldGroup
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email Address"
-                                    className="form-control form-control-lg"
-                                    value={this.state.email}
-                                    error={this.state.errors.email}
-                                    onChange={this.onInputChangeHandler}
-                                    onInput={this.onInputInputHandler}
-                                />
+                            <TextFieldGroup
+                                type="email"
+                                name="email"
+                                placeholder="Email Address"
+                                className="form-control form-control-lg"
+                                value={this.state.email}
+                                error={this.state.errors.email}
+                                onChange={this.onInputChangeHandler}
+                                onInput={this.onInputInputHandler}
+                            />
 
-                                <TextFieldGroup
-                                    type="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    className="form-control form-control-lg"
-                                    value={this.state.password}
-                                    error={this.state.errors.password}
-                                    onChange={this.onInputChangeHandler}
-                                    onInput={this.onInputInputHandler}
-                                />
+                            <TextFieldGroup
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                className="form-control form-control-lg"
+                                value={this.state.password}
+                                error={this.state.errors.password}
+                                onChange={this.onInputChangeHandler}
+                                onInput={this.onInputInputHandler}
+                            />
 
-                                <TextFieldGroup
-                                    type="password"
-                                    name="passwordConfirm"
-                                    placeholder="Password Confirmation"
-                                    className="form-control form-control-lg"
-                                    value={this.state.passwordConfirm}
-                                    error={this.state.errors.passwordConfirm}
-                                    onChange={this.onInputChangeHandler}
-                                    onInput={this.onInputInputHandler}
-                                />
+                            <TextFieldGroup
+                                type="password"
+                                name="passwordConfirm"
+                                placeholder="Password Confirmation"
+                                className="form-control form-control-lg"
+                                value={this.state.passwordConfirm}
+                                error={this.state.errors.passwordConfirm}
+                                onChange={this.onInputChangeHandler}
+                                onInput={this.onInputInputHandler}
+                            />
 
-                                <input type="submit" className="btn btn-info btn-block mt-4" disabled={!isEmpty(this.state.errors)} />
-                            </form>
-                        </div>
+                            <input type="submit" className="btn btn-info btn-block mt-4" disabled={!isEmpty(this.state.errors)} />
+                        </form>
+
+                        {this.props.isLoading && (
+                            <div className="myLoading">
+                                <div className="spinnerContainer">
+                                    <div className="mySpinner">
+                                        <div className="sk-folding-cube">
+                                            <div className="sk-cube1 sk-cube"></div>
+                                            <div className="sk-cube2 sk-cube"></div>
+                                            <div className="sk-cube4 sk-cube"></div>
+                                            <div className="sk-cube3 sk-cube"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </div>
-        )
+        </div>);
     }//END RENDER
 
 
@@ -143,6 +156,7 @@ class Register extends Component {
 
 //mapStateToProps
 const mapStateToProps = (state) => ({
+    isLoading: state.profiles.loading,
     errors: state.errors.errorMessage
 });
 

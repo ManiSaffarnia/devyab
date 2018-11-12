@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: Component, isAuthenticate, ...rest }) => (
                 <Component {...props} />
             </React.Fragment>
         ) : (
-                <Redirect to="/" />
+                <Redirect to="/login" />
             )
     )} />
 );

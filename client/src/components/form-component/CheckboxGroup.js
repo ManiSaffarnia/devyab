@@ -1,41 +1,37 @@
 import React from 'react'
 
-const TextFieldGroup = ({
+const CheckboxGroup = ({
     className,
     disabled,
+    type,
     error,
     id,
     info,
-    type,
     name,
     onChange,
-    onInput,
-    placeholder,
-    value
+    value,
+    label,
+    htmlFor,
 }) => {
     return (
-        <div className="form-group">
+        <div className="form-check mb-4">
             <input
                 type={type}
-                onChange={onChange}
+                id={id}
                 className={!error ? `${className}` : `is-invalid ${className}`}
-                placeholder={placeholder}
                 name={name}
                 value={value}
+                onChange={onChange}
                 disabled={disabled}
-                id={id}
-                onInput={onInput}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
+            <label className="form-check-label" htmlFor={htmlFor}>
+                {label}
+            </label>
+            {error && <span className="invalid-feedback">{error}</span>}
             {info && <small className="form-text text-muted">{info}</small>}
         </div>
     )
 }
 
 
-TextFieldGroup.defaultProps = {
-    type: 'text'
-}
-
-
-export default TextFieldGroup;
+export default CheckboxGroup;

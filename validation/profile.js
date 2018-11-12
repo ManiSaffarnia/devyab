@@ -95,6 +95,7 @@ const createProfileData = (input) => {
     newProfileData.user = input.user;
     if (input.handle) newProfileData.handle = input.handle;
     if (input.company) newProfileData.company = input.company;
+    if (input.website) newProfileData.website = input.website;
     if (input.location) newProfileData.location = input.location;
     if (input.jobStatus) newProfileData.jobStatus = input.jobStatus;
     if (input.skills) newProfileData.skills = input.skills.split(',');//comma seperated string turn into array of string

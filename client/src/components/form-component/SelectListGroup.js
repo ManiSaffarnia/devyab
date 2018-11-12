@@ -1,31 +1,28 @@
 import React from 'react'
 
-const TextFieldGroup = ({
+const SelectListGroup = ({
     className,
-    disabled,
     error,
     id,
     info,
-    type,
     name,
     onChange,
-    onInput,
-    placeholder,
-    value
+    value,
+    options
 }) => {
     return (
         <div className="form-group">
-            <input
-                type={type}
+            <select
                 onChange={onChange}
                 className={!error ? `${className}` : `is-invalid ${className}`}
-                placeholder={placeholder}
                 name={name}
                 value={value}
-                disabled={disabled}
                 id={id}
-                onInput={onInput}
-            />
+            >
+                {options.map((opt, index) => {
+                    return (<option key={index} value={opt.value}>{opt.label}</option>)
+                })}
+            </select>
             {error && <div className="invalid-feedback">{error}</div>}
             {info && <small className="form-text text-muted">{info}</small>}
         </div>
@@ -33,9 +30,5 @@ const TextFieldGroup = ({
 }
 
 
-TextFieldGroup.defaultProps = {
-    type: 'text'
-}
 
-
-export default TextFieldGroup;
+export default SelectListGroup;

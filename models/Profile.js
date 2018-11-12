@@ -17,6 +17,9 @@ const profileSchema = new Schema({
   company: {
     type: String
   },
+  website: {
+    type: String
+  },
   location: {
     type: String
   },
@@ -102,19 +105,19 @@ const profileSchema = new Schema({
   },//end education
   social: {
     youtube: {
-      Type: String
-    },
-    linkedin: {
-      Type: String
+      type: String
     },
     facebook: {
-      Type: String
+      type: String
     },
     twitter: {
-      Type: String
+      type: String
+    },
+    linkedin: {
+      type: String
     },
     instagram: {
-      Type: String
+      type: String
     }
   },//end social
   registerDate: {
@@ -124,55 +127,54 @@ const profileSchema = new Schema({
 });//end schema
 
 //profile validation
-const profileValidation = (input) => {
-  const jobExperienceSchema = {
-    title: Joi.string().required(),
-    companyName: Joi.string().required(),
-    startDate: Joi.date().required(),
-    endDate: Joi.date(),
-    current: Joi.boolean().required(),
-    description: Joi.string(),
-  };
-  const educationSchema = {
-    schoolTitle: Joi.string().required(),
-    degree: Joi.string().required(),
-    fieldOfStudy: Joi.string().required(),
-    GPA: Joi.number().required(),
-    location: Joi.string(),
-    startDate: Joi.date().required(),
-    endDate: Joi.date(),
-    current: Joi.boolean().required(),
-    description: Joi.string(),
-  };
-  const social = {
-    youtube: Joi.string(),
-    linkedin: Joi.string(),
-    facebook: Joi.string(),
-    twitter: Joi.string(),
-    instagram: Joi.string()
-  };
-  const profileSchema = {
-    user: Joi.objectId().required(),
-    handle: Joi.string().max(40).required(),
-    company: Joi.string(),
-    location: Joi.string(),
-    jobStatus: Joi.string().required(),
-    skills: Joi.array().items(Joi.string()),
-    bio: Joi.string(),
-    github: Joi.string(),
-    jobExperience: Joi.array().items(Joi.object(jobExperienceSchema)),
-    education: Joi.array().items(Joi.object(educationSchema)),
-    social: Joi.object(social)
-  }
+// const profileValidation = (input) => {
+//   const jobExperienceSchema = {
+//     title: Joi.string().required(),
+//     companyName: Joi.string().required(),
+//     startDate: Joi.date().required(),
+//     endDate: Joi.date(),
+//     current: Joi.boolean().required(),
+//     description: Joi.string(),
+//   };
+//   const educationSchema = {
+//     schoolTitle: Joi.string().required(),
+//     degree: Joi.string().required(),
+//     fieldOfStudy: Joi.string().required(),
+//     GPA: Joi.number().required(),
+//     location: Joi.string(),
+//     startDate: Joi.date().required(),
+//     endDate: Joi.date(),
+//     current: Joi.boolean().required(),
+//     description: Joi.string(),
+//   };
+//   const social = {
+//     youtube: Joi.string(),
+//     linkedin: Joi.string(),
+//     facebook: Joi.string(),
+//     twitter: Joi.string(),
+//     instagram: Joi.string()
+//   };
+//   const profileSchema = {
+//     user: Joi.objectId().required(),
+//     handle: Joi.string().max(40).required(),
+//     company: Joi.string(),
+//     location: Joi.string(),
+//     jobStatus: Joi.string().required(),
+//     skills: Joi.array().items(Joi.string()),
+//     bio: Joi.string(),
+//     github: Joi.string(),
+//     jobExperience: Joi.array().items(Joi.object(jobExperienceSchema)),
+//     education: Joi.array().items(Joi.object(educationSchema)),
+//     social: Joi.object(social)
+//   }
 
-  return Joi.validate(input, profileSchema, { abortEarly: false });
-}
+//   return Joi.validate(input, profileSchema, { abortEarly: false });
+// }
 
 //profile model
 const Profile = mongoose.model("profile", profileSchema);
 
 module.exports = {
   profileSchema,
-  Profile,
-  profileValidation
+  Profile
 };

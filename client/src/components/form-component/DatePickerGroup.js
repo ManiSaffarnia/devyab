@@ -1,30 +1,27 @@
 import React from 'react'
 
-const TextFieldGroup = ({
+const DatePickerGroup = ({
     className,
     disabled,
     error,
     id,
     info,
-    type,
     name,
     onChange,
     onInput,
-    placeholder,
     value
 }) => {
     return (
         <div className="form-group">
             <input
-                type={type}
-                onChange={onChange}
+                type="date"
+                id={id}
                 className={!error ? `${className}` : `is-invalid ${className}`}
-                placeholder={placeholder}
                 name={name}
                 value={value}
-                disabled={disabled}
-                id={id}
+                onChange={onChange}
                 onInput={onInput}
+                disabled={disabled}
             />
             {error && <div className="invalid-feedback">{error}</div>}
             {info && <small className="form-text text-muted">{info}</small>}
@@ -33,9 +30,4 @@ const TextFieldGroup = ({
 }
 
 
-TextFieldGroup.defaultProps = {
-    type: 'text'
-}
-
-
-export default TextFieldGroup;
+export default DatePickerGroup;

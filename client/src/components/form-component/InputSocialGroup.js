@@ -1,41 +1,38 @@
 import React from 'react'
 
-const TextFieldGroup = ({
-    className,
-    disabled,
-    error,
-    id,
-    info,
-    type,
+const InputSocialGroup = ({
     name,
+    placeholder,
+    value,
+    error,
+    icon,
+    type,
     onChange,
     onInput,
-    placeholder,
-    value
+    className,
+    id
 }) => {
     return (
-        <div className="form-group">
+        <div className="input-group mb-3">
+            <div className="input-group-prepend">
+                <span className="input-group-text">
+                    <i className={icon}></i>
+                </span>
+            </div>
             <input
                 type={type}
                 onChange={onChange}
+                onInput={onInput}
                 className={!error ? `${className}` : `is-invalid ${className}`}
                 placeholder={placeholder}
                 name={name}
                 value={value}
-                disabled={disabled}
                 id={id}
-                onInput={onInput}
             />
             {error && <div className="invalid-feedback">{error}</div>}
-            {info && <small className="form-text text-muted">{info}</small>}
         </div>
     )
 }
 
 
-TextFieldGroup.defaultProps = {
-    type: 'text'
-}
-
-
-export default TextFieldGroup;
+export default InputSocialGroup;

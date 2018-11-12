@@ -40,7 +40,7 @@ export const registerRealTimeValidation = (inputName, inputData, password) => {
     //EMAIL
     else if (inputName === 'email') {
         const emailRex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/;
-        if (!emailRex.test(String(inputData).toLowerCase())) error.email = 'Email is not valid';
+        if (!emailRex.test(String(inputData).toLowerCase()) && inputData.trim().length > 0) error.email = 'Email is not valid';
     }
 
     //PASSWORD
@@ -49,7 +49,8 @@ export const registerRealTimeValidation = (inputName, inputData, password) => {
     }
     //PASSWORD CONFIRM
     else if (inputName === 'passwordConfirm') {
-        if (inputData !== password) error.passwordConfirm = 'password and confirmation password in not match';
+
+        if (inputData !== password && inputData.length > 0) error.passwordConfirm = 'password and confirmation password in not match';
     }
 
     return {

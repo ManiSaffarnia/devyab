@@ -25,7 +25,7 @@ class Navbar extends Component {
                             <ul className="navbar-nav ml-auto">
                                 {!this.props.isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/register">Sign Up</Link></li>}
                                 {!this.props.isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>}
-                                {this.props.isAuthenticated && <li className="nav-item"> <a className="nav-link" href="/dashboard" onClick={this.props.logout}><img className="rounded-circle" src="./img/default-profile.png" alt="default profile" style={{ width: '25px', height: '25px', marginRight: '5px' }} /> Logout </a> </li>}
+                                {this.props.isAuthenticated && <li className="nav-item"> <a className="nav-link" href="/dashboard" onClick={this.props.logout}><img className="rounded-circle" src="./img/default-profile1.png" alt="default profile" style={{ width: '25px', height: '25px', marginRight: '5px' }} /> Logout </a> </li>}
                             </ul>
                         </div>
                     </div>
