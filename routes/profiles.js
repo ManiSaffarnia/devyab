@@ -270,7 +270,7 @@ router.post('/education', authorization, asynchMiddleware(async (req, res) => {
 
 
 /* DELETE EDUCATION*/
-//@route   DELETE api/profiles/educatuin/:educationID
+//@route   DELETE api/profiles/education/:educationID
 //@desc    Delete an education from profile
 //@access  Private route
 router.delete('/education/:educationID', authorization, asynchMiddleware(async (req, res) => {

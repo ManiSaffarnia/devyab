@@ -109,6 +109,21 @@ a{
   display: flex;
 }
 
+.table-delete-column {
+  width: 150px;
+  max-width: 150px;
+}
+
+.table-info-column{
+  max-width: 320px;
+  width: 320px;
+}
+
+.table-info-date{
+  max-width: 215;
+  width: 215;
+}
+
 
 
 

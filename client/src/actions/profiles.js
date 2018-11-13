@@ -157,6 +157,54 @@ export const deleteExperience = (id = {}, history) => {
 
 
 //================================================================================================
+//                                         EDUCATION
+//================================================================================================
+
+//ADD EDUCATION
+export const createEducation = (education = {}, history) => {
+    return async (dispatch) => {
+        dispatch(isLoading()); // show loading page
+        try {
+            const result = await axios.post('api/profiles/education', education);
+
+            if (result.status === 200) {
+                dispatch(isLoading()); //hide loading page
+                history.push({
+                    pathname: '/dashboard',
+                    state: { flashMessage: 'Your education record was created SUCCESSFULY' }
+                })
+            }
+        }
+        catch (ex) {
+            if (ex.response.data) dispatch(setErrors(ex.response.data));
+        }
+    }
+};
+
+
+//REMOVE EDUCATION
+export const deleteEducation = (id = {}, history) => {
+    return async (dispatch) => {
+        dispatch(isLoading()); // show loading page
+        try {
+            const result = await axios.delete(`api/profiles/education/${id}`);
+
+            if (result.status === 200) {
+                dispatch(isLoading()); //hide loading page
+                history.push({
+                    pathname: '/dashboard',
+                    state: { flashMessage: 'Your education record was deleted SUCCESSFULY' }
+                })
+            }
+        }
+        catch (ex) {
+            if (ex.response.data) dispatch(setErrors(ex.response.data));
+        }
+    }
+};
+
+
+//================================================================================================
 //                                      LOADING
 //================================================================================================
 

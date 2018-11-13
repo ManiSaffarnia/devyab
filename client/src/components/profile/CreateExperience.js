@@ -28,7 +28,7 @@ class CreateExperience extends Component {
 
         if (inputFieldName === "current") {
             const element = document.getElementById('current').checked;
-            this.setState({ current: element });
+            this.setState({ current: element, endDate: '' });
         }
         else {
             //set state
@@ -144,6 +144,7 @@ class CreateExperience extends Component {
                                     onChange={this.onInputChangeHandler}
                                     error={this.state.errors.endDate}
                                     onInput={this.onInputInputHandler}
+                                    disabled={this.state.current}
                                 />
 
 

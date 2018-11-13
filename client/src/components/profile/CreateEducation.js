@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import TextFieldGroup from '../form-component/TextFieldGroup';
 import TextAreaFieldGroup from '../form-component/TextAreaFieldGroup';
+import DatePickerGroup from '../form-component/DatePickerGroup';
+import CheckboxGroup from '../form-component/CheckboxGroup';
 import isEmpty from '../../validation/isEmpty';
+import { educationRealTimeValidation, educationValidation } from '../../validation/education';
+import { createEducation } from '../../actions/profiles';
 
 class CreateEducation extends Component {
 
     state = {
-        schoolName: '',
+        schoolTitle: '',
         degree: '',
-        fieldofstudy: '',
+        fieldOfStudy: '',
+        location: '',
+        GPA: '',
+        startDate: '',
+        endDate: '',
+        current: false,
         description: '',
         errors: {}
     }
@@ -18,8 +29,23 @@ class CreateEducation extends Component {
     onInputChangeHandler = (e) => {
         const inputData = e.target.value;
         const inputFieldName = e.target.name;
-        //set state
-        this.setState(() => ({ [inputFieldName]: inputData }));
+        if (inputFieldName === "current" || inputFieldName === "GPA") {
+
+            if (inputFieldName === "current") { //CURRENT
+                const element = document.getElementById('current').checked;
+                this.setState({ current: element, endDate: '' });
+            }
+            else { //GPA
+                if (!inputData || inputData.match(/^\d{1,2}(\.\d{0,2})?$/)) {
+
+                    this.setState(() => ({ [inputFieldName]: inputData }));
+                }
+            }
+        }
+        else {
+            //set state for THE OTHERS
+            this.setState(() => ({ [inputFieldName]: inputData }));
+        }
     };//End
 
 
@@ -27,24 +53,44 @@ class CreateEducation extends Component {
     onInputInputHandler = (e) => {
         const inputData = e.target.value;
         const inputFieldName = e.target.name;
-        // const { isValid, error } = profileRealTimeValidation(inputFieldName, inputData);
-        // if (!isValid) this.setState((preState) => ({ errors: { ...preState.errors, ...error } }));
-        // else {
-        //     this.setState((preState) => {
-        //         const clearedError = { ...preState.errors };
-        //         delete clearedError[inputFieldName];
-        //         return {
-        //             errors: { ...clearedError }
-        //         }
-        //     })
+        const { isValid, error } = educationRealTimeValidation(inputFieldName, inputData);
+        if (!isValid) this.setState((preState) => ({ errors: { ...preState.errors, ...error } }));
+        else {
+            this.setState((preState) => {
+                const clearedError = { ...preState.errors };
+                delete clearedError[inputFieldName];
+                return {
+                    errors: { ...clearedError }
+                }
+            })
 
-        // }
+        }
     };//END 
 
 
     //On Submit Handler
     onSubmitHandler = async (e) => {
         e.preventDefault();
+
+        //validation
+        const { isValid, errors } = educationValidation(this.state);
+        if (!isValid) this.setState(() => ({ errors })); //validation error dashte
+        else {
+            const education = {
+                schoolTitle: this.state.schoolTitle,
+                degree: this.state.degree,
+                fieldOfStudy: this.state.fieldOfStudy,
+                location: this.state.location,
+                GPA: parseFloat(this.state.GPA),
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                current: this.state.current,
+                description: this.state.description,
+            }
+            this.props.createEducation(education, this.props.history);
+        }
+
+
         console.log(this.state);
 
     };//End
@@ -69,9 +115,9 @@ class CreateEducation extends Component {
                                     type="text"
                                     className="form-control form-control-lg"
                                     placeholder="* School Or Bootcamp"
-                                    name="schoolName"
-                                    value={this.state.school}
-                                    error={this.state.errors.school}
+                                    name="schoolTitle"
+                                    value={this.state.schoolTitle}
+                                    error={this.state.errors.schoolTitle}
                                     onChange={this.onInputChangeHandler}
                                     onInput={this.onInputInputHandler}
                                 />
@@ -91,27 +137,69 @@ class CreateEducation extends Component {
                                     type="text"
                                     className="form-control form-control-lg"
                                     placeholder="Field Of Study"
-                                    name="fieldofstudy"
-                                    value={this.state.fieldofstudy}
-                                    error={this.state.errors.fieldofstudy}
+                                    name="fieldOfStudy"
+                                    value={this.state.fieldOfStudy}
+                                    error={this.state.errors.fieldOfStudy}
                                     onChange={this.onInputChangeHandler}
                                     onInput={this.onInputInputHandler}
                                 />
 
+                                <TextFieldGroup
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    placeholder="Location"
+                                    name="location"
+                                    value={this.state.location}
+                                    error={this.state.errors.location}
+                                    onChange={this.onInputChangeHandler}
+                                    onInput={this.onInputInputHandler}
+                                />
+
+                                <TextFieldGroup
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    placeholder="* GPA"
+                                    name="GPA"
+                                    info="You should enter a number, eg. 18.45"
+                                    value={this.state.GPA}
+                                    error={this.state.errors.GPA}
+                                    onChange={this.onInputChangeHandler}
+                                    onInput={this.onInputInputHandler}
+                                />
+
+
                                 <h6>From Date</h6>
-                                <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="from" />
-                                </div>
+                                <DatePickerGroup
+                                    className="form-control form-control-lg"
+                                    name="startDate"
+                                    value={this.state.startDate}
+                                    onChange={this.onInputChangeHandler}
+                                    error={this.state.errors.startDate}
+                                />
+
                                 <h6>To Date</h6>
-                                <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="to" />
-                                </div>
-                                <div className="form-check mb-4">
-                                    <input className="form-check-input" type="checkbox" name="current" value="" id="current" />
-                                    <label className="form-check-label" htmlFor="current">
-                                        Current Job
-                                    </label>
-                                </div>
+                                <DatePickerGroup
+                                    className="form-control form-control-lg"
+                                    name="endDate"
+                                    value={this.state.endDate}
+                                    onChange={this.onInputChangeHandler}
+                                    error={this.state.errors.endDate}
+                                    onInput={this.onInputInputHandler}
+                                    disabled={this.state.current}
+                                />
+
+
+                                <CheckboxGroup
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="current"
+                                    id="current"
+                                    value={this.state.current}
+                                    onChange={this.onInputChangeHandler}
+                                    error={this.state.errors.current}
+                                    label="Current Job"
+                                    htmlFor="current"
+                                />
 
                                 <TextAreaFieldGroup
                                     className="form-control form-control-lg"
@@ -135,4 +223,12 @@ class CreateEducation extends Component {
 }
 
 
-export default CreateEducation;
+const mapStateToProps = (state) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    createEducation: (data, history) => { dispatch(createEducation(data, history)) }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEducation);

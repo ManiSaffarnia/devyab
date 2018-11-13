@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startGetUserProfile, deleteProfile } from '../../actions/profiles';
 import ExperienceList from './ExperienceList';
+import EducationList from './EducationList';
 import Loading from '../Loading';
 import isEmpty from '../../validation/isEmpty';
+import Education from './Education';
 
 
 class Dashboard extends Component {
@@ -57,38 +59,14 @@ class Dashboard extends Component {
                             </div>
 
 
-                            {/** EXPERIENCE*/}
+                            {/** EXPERIENCE LIST*/}
                             <ExperienceList history={this.props.history} />
 
 
-                            {/** EXPERIENCE*/}
-                            <div>
-                                <h4 className="mb-2">Education Credentials</h4>
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>School</th>
-                                            <th>Degree</th>
-                                            <th>Years</th>
-                                            <th />
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Northern Essex</td>
-                                            <td>Associates</td>
-                                            <td>
-                                                02-03-2007 - 01-02-2009
-                                    </td>
-                                            <td>
-                                                <button className="btn btn-danger">
-                                                    Delete
-                                        </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            {/** EDUCARION LIST*/}
+                            <EducationList history={this.props.history} />
+
+
 
                             <div style={{ marginBottom: "60px" }}>
                                 <button className="btn btn-danger" onClick={this.onDeleteProfileHandler}>

@@ -10,12 +10,12 @@ const Experience = (props) => {
     return (
 
         <tr>
-            <td>{companyName}</td>
-            <td>{title}</td>
-            <td>
+            <td className="table-info-column">{companyName}</td>
+            <td className="table-info-column">{title}</td>
+            <td className="table-info-date">
                 {new Date(startDate).toISOString().split('T')[0]} - {current ? "Now" : new Date(endDate).toISOString().split('T')[0]}
             </td>
-            <td>
+            <td className="table-delete-column">
                 <button className="btn btn-danger" onClick={onDeleteHandler}>
                     Delete
                 </button>
