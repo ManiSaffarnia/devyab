@@ -25,17 +25,14 @@ class CreateExperience extends Component {
     onInputChangeHandler = (e) => {
         const inputFieldName = e.target.name;
         const inputData = e.target.value;
-
-        if (inputFieldName === "current") {
-            const element = document.getElementById('current').checked;
-            this.setState({ current: element, endDate: '' });
-        }
-        else {
-            //set state
-            this.setState(() => ({ [inputFieldName]: inputData }));
-        }
-
+        this.setState(() => ({ [inputFieldName]: inputData }));
     };//End
+
+
+    //On CheckBox CHECKED handler
+    onCheckBoxCheked = (e) => {
+        this.setState((preState) => ({ current: !preState.current, endDate: '' }));
+    }
 
 
     //on input's input event
@@ -154,7 +151,7 @@ class CreateExperience extends Component {
                                     name="current"
                                     id="current"
                                     value={this.state.current}
-                                    onChange={this.onInputChangeHandler}
+                                    onChange={this.onCheckBoxCheked}
                                     error={this.state.errors.current}
                                     label="Current Job"
                                     htmlFor="current"
@@ -178,11 +175,13 @@ class CreateExperience extends Component {
                 </div>
             </div>
         )
-    }
-}
+    }//END RENDER
+}//END COMPONENT
+
 
 const mapStateToProps = (state) => ({
-
+    profiles: state.profiles,
+    errors: state.errors
 });
 
 const mapDispatchToProps = (dispatch) => ({

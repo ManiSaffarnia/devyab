@@ -11,7 +11,7 @@ class ExperienceList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="Experience-List">
                 <h4 className="mb-2">Experience Credentials</h4>
                 <table className="table">
                     <thead>
@@ -36,15 +36,13 @@ class ExperienceList extends Component {
                 </table>
             </div>
         )
-    }
-}
+    }//END RENDER
 
-const mapStateToProps = (state) => ({
-    experiences: state.profiles.profile.jobExperience
-});
+}//END COMPONENT
+
 
 const mapDispatchToProps = (dispatch) => ({
     deleteExperience: (id, history) => { dispatch(deleteExperience(id, history)) }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExperienceList);
+export default connect(null, mapDispatchToProps)(ExperienceList);

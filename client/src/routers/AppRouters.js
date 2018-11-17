@@ -13,6 +13,8 @@ import CreateProfile from '../components/profile/CreateProfile';
 import EditProfile from '../components/profile/EditProfile';
 import CreateEducation from '../components/profile/CreateEducation';
 import CreateExperience from '../components/profile/CreateExperience';
+import DevelopersPage from '../components/developers/DevelopersPage';
+import Profile from '../components/developers/profile/Profile';
 
 const AppRouter = () => (
     <BrowserRouter>
@@ -20,6 +22,8 @@ const AppRouter = () => (
             <Navbar />
             <Switch>
                 <Route path="/" component={Landing} exact />
+                <Route path="/developers" component={DevelopersPage} />
+                <Route path="/Profile/:handle" component={Profile} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/create-profile" component={CreateProfile} />
                 <PrivateRoute path="/edit-profile" component={EditProfile} />

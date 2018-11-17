@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import TextFieldGroup from './TextFieldGroup';
 import TextAreaFieldGroup from './TextAreaFieldGroup';
 import SelectListGroup from './SelectListGroup';
@@ -10,36 +11,33 @@ import { profileValidation, profileRealTimeValidation } from '../../validation/p
 class ProfileForm extends Component {
 
     state = {
-        handle: !isEmpty(this.props.profiles.profile) ? this.props.profiles.profile.handle : '',
-        company: !isEmpty(this.props.profiles.profile.company) ? this.props.profiles.profile.company : '',
-        website: !isEmpty(this.props.profiles.profile.website) ? this.props.profiles.profile.website : '',
-        location: !isEmpty(this.props.profiles.profile.location) ? this.props.profiles.profile.location : '',
-        jobStatus: !isEmpty(this.props.profiles.profile) ? this.props.profiles.profile.jobStatus : '',
-        skills: !isEmpty(this.props.profiles.profile) ? this.props.profiles.profile.skills : '',
-        github: !isEmpty(this.props.profiles.profile.github) ? this.props.profiles.profile.github : '',
-        bio: !isEmpty(this.props.profiles.profile.bio) ? this.props.profiles.profile.bio : '',
-        twitter: !isEmpty(this.props.profiles.profile.twitter) ? this.props.profiles.profile.twitter : '',
-        facebook: !isEmpty(this.props.profiles.profile.facebook) ? this.props.profiles.profile.facebook : '',
-        linkedin: !isEmpty(this.props.profiles.profile.linkedin) ? this.props.profiles.profile.linkedin : '',
-        youtube: !isEmpty(this.props.profiles.profile.youtube) ? this.props.profiles.profile.youtube : '',
-        instagram: !isEmpty(this.props.profiles.profile.instagram) ? this.props.profiles.profile.instagram : '',
+        handle: (this.props.profile && "handle" in this.props.profile) ? this.props.profile.handle : '',
+        company: (this.props.profile && "company" in this.props.profile) ? this.props.profile.company : '',
+        website: (this.props.profile && "website" in this.props.profile) ? this.props.profile.website : '',
+        location: (this.props.profile && "location" in this.props.profile) ? this.props.profile.location : '',
+        jobStatus: (this.props.profile && "jobStatus" in this.props.profile) ? this.props.profile.jobStatus : '',
+        skills: (this.props.profile && "skills" in this.props.profile) ? this.props.profile.skills : '',
+        github: (this.props.profile && "github" in this.props.profile) ? this.props.profile.github : '',
+        bio: (this.props.profile && "bio" in this.props.profile) ? this.props.profile.bio : '',
+        twitter: (this.props.profile && "twitter" in this.props.profile) ? this.props.profile.twitter : '',
+        facebook: (this.props.profile && "facebook" in this.props.profile) ? this.props.profile.facebook : '',
+        linkedin: (this.props.profile && "linkedin" in this.props.profile) ? this.props.profile.linkedin : '',
+        youtube: (this.props.profile && "youtube" in this.props.profile) ? this.props.profile.youtube : '',
+        instagram: (this.props.profile && "instagram" in this.props.profile) ? this.props.profile.instagram : '',
         errors: {},
         displaySocialInputs: false
     }
 
 
     componentWillReceiveProps(nextProps) {
-        console.log(this.props);
-        if (nextProps.errors) {
+        console.log("nextProps", nextProps);
+        if (nextProps.profile) {
             this.setState(() => ({
-                errors: nextProps.errors.errorMessage
+                ...nextProps.profile
             }))
         }
     }//END
 
-    componentWillMount() {
-        console.log(this.props);
-    }
 
     //On Input Change handler
     onInputChangeHandler = (e) => {
@@ -282,5 +280,8 @@ class ProfileForm extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    profile: state.profiles.profile
+})
 
-export default ProfileForm;
+export default connect(mapStateToProps, null)(ProfileForm);

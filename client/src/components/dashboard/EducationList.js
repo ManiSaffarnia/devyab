@@ -43,12 +43,8 @@ class EducationList extends Component {
 }//END COMPONENT
 
 
-const mapStateToProps = (state) => ({
-    educations: state.profiles.profile.education
-});
-
 const mapDispatchToProps = (dispatch) => ({
     deleteEducation: (id, history) => { dispatch(deleteEducation(id, history)) }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EducationList);
+export default connect(null, mapDispatchToProps)(EducationList);

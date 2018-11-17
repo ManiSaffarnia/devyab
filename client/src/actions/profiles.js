@@ -28,12 +28,74 @@ export const startGetUserProfile = () => {
             else if (ex.response.data && ex.response.status !== 404) dispatch(setErrors(ex.response.data));
         }
     }
-};
+};//END startGetUserProfile
+
 
 export const getUserProfile = (data) => ({
     type: 'GET_CURRENT_USER_PROFILE',
     data
-});
+});//END getUserProfile
+
+
+// ==============================================GET ALL==============================================
+
+export const startGetALLProfiles = () => {
+    return async (dispatch) => {
+        dispatch(isLoading());
+        try {
+            const result = await axios.get('/api/profiles/all');
+
+            if (result.status === 200) {
+                //console.log(result.data);
+                dispatch(setAllProfiles(result.data));
+            }
+        }
+        catch (ex) {
+            if (ex.response.data && ex.response.data.noProfile) {
+                dispatch(setAllProfiles({}));
+                dispatch(setErrors(ex.response.data));
+            }
+            else if (ex.response.data && ex.response.status !== 404) dispatch(setErrors(ex.response.data));
+        }
+    }
+};//END startGetProfiles
+
+
+export const setAllProfiles = (data) => ({
+    type: 'SET_ALL_DEVELOPERS_PROFILE',
+    data
+});//END setProfiles
+
+
+// =========================================== GET BY HANDLE ==========================================
+
+export const startGetProfileByHandle = (handle) => {
+    return async (dispatch) => {
+        dispatch(isLoading());
+        try {
+            const result = await axios.get(`/api/profiles/handle/${handle}`);
+
+            if (result.status === 200) {
+                //console.log(result.data);
+                dispatch(setProfileByHandle(result.data));
+            }
+        }
+        catch (ex) {
+            if (ex.response.data && ex.response.data.noProfile) {
+                dispatch(setProfileByHandle({}));
+                dispatch(setErrors(ex.response.data));
+            }
+            else if (ex.response.data && ex.response.status !== 404) dispatch(setErrors(ex.response.data));
+        }
+    }
+};//END startGetProfiles
+
+
+export const setProfileByHandle = (data) => ({
+    type: 'SET_DEVELOPER_PROFILE_BY_HANDLE',
+    data
+});//END setProfiles
+
 
 //================================================================================================
 //                                      CREATE PROFILE
@@ -69,7 +131,6 @@ export const editProfile = (editedProfile = {}, history) => {
             const result = await axios.put('api/profiles/me', editedProfile);
 
             if (result.status === 200) {
-                dispatch(isLoading());
                 console.log(result.data);
                 history.push({
                     pathname: '/dashboard',
@@ -98,6 +159,7 @@ export const deleteProfile = (history) => {
                     pathname: '/dashboard',
                     state: { flashMessage: 'Success! Your profile was deleted!' }
                 })
+
             }
         }
         catch (ex) {
@@ -191,10 +253,7 @@ export const deleteEducation = (id = {}, history) => {
 
             if (result.status === 200) {
                 dispatch(isLoading()); //hide loading page
-                history.push({
-                    pathname: '/dashboard',
-                    state: { flashMessage: 'Your education record was deleted SUCCESSFULY' }
-                })
+                dispatch(getUserProfile(result.data));
             }
         }
         catch (ex) {

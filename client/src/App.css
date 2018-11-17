@@ -10,10 +10,6 @@ body {
   box-sizing: border-box;
 }
 
-.container{
-  margin: auto !important;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -34,9 +30,14 @@ a{
 .custom-container,.App,.root{
   height: 100vh;
 }
-.login,.register,.dashboard{
+.login,.register,.dashboard,.Developers{
   height: 86.74%;
   min-height: 700px;
+  display: flex;
+}
+.profile{
+  margin-top: 20px;
+  margin-bottom: 25px;
   display: flex;
 }
 .create-profile,.edit-profile{
@@ -51,9 +52,11 @@ a{
 
 .custom-navbar{
   height: 5.8%;
+  min-height: 59px;
 }
 .custom-footer{
   height: 7.5%;
+  min-height: 72px;
 }
 
 .input-group-prepend{
@@ -109,6 +112,8 @@ a{
   display: flex;
 }
 
+
+/* Profile TABLE */
 .table-delete-column {
   width: 150px;
   max-width: 150px;
@@ -132,7 +137,7 @@ a{
 
 
 
-/*  */
+/*LOADING */
 
 .myLoading{
   position: fixed; 

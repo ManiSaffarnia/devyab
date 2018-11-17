@@ -29,25 +29,24 @@ class CreateEducation extends Component {
     onInputChangeHandler = (e) => {
         const inputData = e.target.value;
         const inputFieldName = e.target.name;
-        if (inputFieldName === "current" || inputFieldName === "GPA") {
-
-            if (inputFieldName === "current") { //CURRENT
-                const element = document.getElementById('current').checked;
-                this.setState({ current: element, endDate: '' });
-            }
-            else { //GPA
-                if (!inputData || inputData.match(/^\d{1,2}(\.\d{0,2})?$/)) {
-
-                    this.setState(() => ({ [inputFieldName]: inputData }));
-                }
-            }
-        }
-        else {
-            //set state for THE OTHERS
-            this.setState(() => ({ [inputFieldName]: inputData }));
-        }
+        this.setState(() => ({ [inputFieldName]: inputData }));
     };//End
 
+
+    //On CheckBox CHECKED handler
+    onCheckBoxCheked = (e) => {
+        this.setState((preState) => ({ current: !preState.current, endDate: '' }));
+    }
+
+
+    //On GPA changed handler
+    onGPAchangedHandler = (e) => {
+        const inputData = e.target.value;
+        const inputFieldName = e.target.name;
+        if (!inputData || inputData.match(/^\d{1,2}(\.\d{0,2})?$/)) {
+            this.setState(() => ({ [inputFieldName]: inputData }));
+        }
+    }
 
     //on input's input event
     onInputInputHandler = (e) => {
@@ -163,12 +162,12 @@ class CreateEducation extends Component {
                                     info="You should enter a number, eg. 18.45"
                                     value={this.state.GPA}
                                     error={this.state.errors.GPA}
-                                    onChange={this.onInputChangeHandler}
+                                    onChange={this.onGPAchangedHandler}
                                     onInput={this.onInputInputHandler}
                                 />
 
 
-                                <h6>From Date</h6>
+                                <h6>* From Date</h6>
                                 <DatePickerGroup
                                     className="form-control form-control-lg"
                                     name="startDate"
@@ -195,7 +194,7 @@ class CreateEducation extends Component {
                                     name="current"
                                     id="current"
                                     value={this.state.current}
-                                    onChange={this.onInputChangeHandler}
+                                    onChange={this.onCheckBoxCheked}
                                     error={this.state.errors.current}
                                     label="Current Job"
                                     htmlFor="current"

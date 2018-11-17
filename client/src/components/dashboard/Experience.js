@@ -4,11 +4,10 @@ const Experience = (props) => {
     const { companyName, title, startDate, endDate, current, _id } = props.experience
 
     const onDeleteHandler = (e) => {
-        props.onDeleteHandler(_id);
+        props.onDeleteHandler(_id); //handleri ro ke az bala pass dadim seda mikonim
     };
 
     return (
-
         <tr>
             <td className="table-info-column">{companyName}</td>
             <td className="table-info-column">{title}</td>

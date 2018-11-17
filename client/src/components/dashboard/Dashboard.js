@@ -6,7 +6,6 @@ import ExperienceList from './ExperienceList';
 import EducationList from './EducationList';
 import Loading from '../Loading';
 import isEmpty from '../../validation/isEmpty';
-import Education from './Education';
 
 
 class Dashboard extends Component {
@@ -43,7 +42,7 @@ class Dashboard extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             <h1 className="display-4">Dashboard</h1>
-                            <p className="lead text-muted"> Welcome <Link to={`/profiles/handle/${profile.handle}`}>{profile.user.name}</Link></p>
+                            <p className="lead text-muted"> Welcome <Link to={`/Profile/${profile.handle}`}>{profile.user.name}</Link></p>
 
                             <div className="btn-group mb-4" role="group">
                                 <Link to="/edit-profile" className="btn btn-secondary mr-1">
@@ -60,12 +59,11 @@ class Dashboard extends Component {
 
 
                             {/** EXPERIENCE LIST*/}
-                            <ExperienceList history={this.props.history} />
+                            <ExperienceList history={this.props.history} experiences={this.props.profiles.profile.jobExperience} />
 
 
                             {/** EDUCARION LIST*/}
-                            <EducationList history={this.props.history} />
-
+                            <EducationList history={this.props.history} educations={this.props.profiles.profile.education} />
 
 
                             <div style={{ marginBottom: "60px" }}>

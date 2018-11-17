@@ -38,6 +38,7 @@ const user = authentication(store);
 console.log(user);
 if (user) {
     store.dispatch(loginUser(user));
+    store.dispatch(startGetUserProfile())
     console.log('Login');
     renderApp();
 } else {

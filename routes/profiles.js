@@ -41,7 +41,6 @@ router.get('/handle/:handle', asynchMiddleware(async (req, res) => {
   //find Profile
   const foundProfile = await Profile.findOne({ handle }).populate('user', ['name', 'avatar']);
   if (!foundProfile) return res.status(404).json({ errorMessage: "دولوپری با این مشخصات یافت نشد" });
-
   res.json(foundProfile);
 }));//END users profile
 

@@ -31,9 +31,6 @@ class EditProfile extends Component {
     };//End
 
     render() {
-        console.log(this.props.profiles);
-        console.log(this.state.profiles);
-
         return (
             <React.Fragment>
                 <div className="create-profile">
