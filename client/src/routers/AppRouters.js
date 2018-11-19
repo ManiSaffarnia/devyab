@@ -15,13 +15,14 @@ import CreateEducation from '../components/profile/CreateEducation';
 import CreateExperience from '../components/profile/CreateExperience';
 import DevelopersPage from '../components/developers/DevelopersPage';
 import Profile from '../components/developers/profile/Profile';
-
+import Posts from '../components/posts/Posts';
+import Post from '../components/post/Post';
 const AppRouter = () => (
     <BrowserRouter>
         <React.Fragment>
             <Navbar />
             <Switch>
-                <Route path="/" component={Landing} exact />
+                <PublicRoute path="/" component={Landing} exact />
                 <Route path="/developers" component={DevelopersPage} />
                 <Route path="/Profile/:handle" component={Profile} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
@@ -29,6 +30,8 @@ const AppRouter = () => (
                 <PrivateRoute path="/edit-profile" component={EditProfile} />
                 <PrivateRoute path="/add-education" component={CreateEducation} />
                 <PrivateRoute path="/add-experience" component={CreateExperience} />
+                <PrivateRoute path="/feed" component={Posts} exact />
+                <PrivateRoute path="/feed/:postID" component={Post} />
                 <PublicRoute path="/register" component={Register} />
                 <PublicRoute path="/login" component={Login} />
                 <Route component={NotFound} />
