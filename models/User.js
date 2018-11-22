@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const jwt = require('jsonwebtoken');
-const keys = require('../config/keys');
+//const keys = require('../config/keys');
 const config = require('config');
 
 //create User schema
