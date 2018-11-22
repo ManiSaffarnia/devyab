@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     if (!token) return res.status(401).json({ msg: 'unAuthorized! login konid' });
 
     try {
-        req.user = jwt.verify(token, config.get(JWTsecret));
+        req.user = jwt.verify(token, config.get("JWTsecret"));
         next();
     }
     catch (ex) {

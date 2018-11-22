@@ -1,4 +1,5 @@
-const index = require("../routes/index");
+
+const express = require('express');
 const users = require("../routes/users");
 const posts = require("../routes/posts");
 const profiles = require("../routes/profiles");

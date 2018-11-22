@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const config = require('config');
 
-const databaseURI = config.get(databaseURI);
+const databaseURI = config.get("databaseURI");
 
 module.exports = () => {
-
+  console.log(databaseURI);
   mongoose
     .connect(databaseURI, { useNewUrlParser: true })
     .then(() => {
