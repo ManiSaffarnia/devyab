@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const { databaseURI } = require("../config/keys");
+const config = require('config');
+
+const databaseURI = config.get(databaseURI);
 
 module.exports = () => {
 

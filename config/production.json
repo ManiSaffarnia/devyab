@@ -1,5 +1,9 @@
 {
     "databaseURI": "",
     "googleClientID": "",
-    "googleClientSecret": ""
+    "googleClientSecret": "",
+    "googleCallBack": "",
+    "JWTsecret": "",
+    "emailUsername": "",
+    "emailPassword": ""
 }

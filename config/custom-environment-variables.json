@@ -1,5 +1,9 @@
 {
     "databaseURI": "DEVYAB_DB_URI",
     "googleClientID": "DEVYAV_GOOGLE_CLIENT_ID",
-    "googleClientSecret": "DEVYAB_GOOGLE_CLIENT_SECRET"
+    "googleClientSecret": "DEVYAB_GOOGLE_CLIENT_SECRET",
+    "googleCallBack": "DEVYAB_GOOGLE_CALLBACK",
+    "JWTsecret": "DEVYAB_JWT_SECRET",
+    "emailUsername": "DEVYAB_EMAIL_USERNAME",
+    "emailPassword": "DEVYAB_EMAIL_PASSWORD"
 }

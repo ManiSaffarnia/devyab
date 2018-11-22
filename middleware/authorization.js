@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
+const config = require('config');
 
 module.exports = (req, res, next) => {
     console.log(req.header);
@@ -8,7 +9,7 @@ module.exports = (req, res, next) => {
     if (!token) return res.status(401).json({ msg: 'unAuthorized! login konid' });
 
     try {
-        req.user = jwt.verify(token, keys.jwt_secret);
+        req.user = jwt.verify(token, config.get(JWTsecret));
         next();
     }
     catch (ex) {
