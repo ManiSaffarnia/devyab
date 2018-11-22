@@ -1,5 +1,4 @@
 {
-    "databaseURI": "DEVYAB_DB_URI",
-    "googleClientID": "DEVYAV_GOOGLE_CLIENT_ID",
-    "googleClientSecret": "DEVYAB_GOOGLE_CLIENT_SECRET"
+    "gitHubClientID": "DEVYAV_GITHUB_CLIENT_ID",
+    "gitHubClientSecret": "DEVYAB_GITHUB_CLIENT_SECRET"
 }

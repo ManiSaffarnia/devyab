@@ -1,5 +1,4 @@
 {
-    "databaseURI": "",
-    "googleClientID": "",
-    "googleClientSecret": ""
+    "gitHubClientID": "",
+    "gitHubClientSecret": ""
 }
