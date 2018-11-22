@@ -4,7 +4,6 @@ const posts = require("../routes/posts");
 const profiles = require("../routes/profiles");
 const error = require('../middleware/error');
 const jsonparser = require('../middleware/middleware');
-const staticPage = require('../routes/static');
 
 module.exports = app => {
   jsonparser(app); //express.json() middleware
@@ -15,7 +14,11 @@ module.exports = app => {
 
   //serve our statuc file
   if (process.env.NODE_ENV === 'production') {
-    app.use("*", staticPage);
+    console.log('production');
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
   }
 
   error(app); //error middleware
