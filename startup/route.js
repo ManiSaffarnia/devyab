@@ -9,7 +9,6 @@ const staticPage = require('../routes/static');
 module.exports = app => {
   jsonparser(app); //express.json() middleware
 
-  app.use("/", index); //test route
   app.use("/api/users", users); //setup Users routes
   app.use("/api/posts", posts); //setup Posts routes
   app.use("/api/profiles", profiles); //setup Profile routes
