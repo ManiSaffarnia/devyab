@@ -3,11 +3,14 @@ import PostItem from './PostItem';
 
 const PostFeed = (props) => {
     console.log(props.posts);
+
+
     return (
         <div className="posts">
-            {props.posts.map((post) => {
+            {props.posts.length > 0 && props.posts.map((post) => {
                 return <PostItem key={post._id} post={post} auth={props.auth} />
             })}
+
         </div>
     )
 }

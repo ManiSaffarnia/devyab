@@ -9,7 +9,7 @@ const Developer = (props) => {
         <div className="card card-body bg-light mb-3">
             <div className="row">
                 <div className="col-2">
-                    <img className="rounded-circle" src={avatar ? avatar : "./img/default-profile1.png"} alt="avatar" />
+                    <img className="rounded-circle developer-image-md" src={avatar ? avatar : "./img/default-profile1.png"} alt="avatar" />
                 </div>
                 <div className="col-lg-6 col-md-4 col-8">
                     <h3>{name}</h3>

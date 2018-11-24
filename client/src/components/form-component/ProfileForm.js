@@ -6,6 +6,7 @@ import SelectListGroup from './SelectListGroup';
 import InputSocialGroup from './InputSocialGroup';
 import isEmpty from '../../validation/isEmpty';
 import { profileValidation, profileRealTimeValidation } from '../../validation/profile';
+import { uploadAvatar } from '../../actions/profiles';
 
 
 class ProfileForm extends Component {
@@ -24,6 +25,7 @@ class ProfileForm extends Component {
         linkedin: (this.props.profile && "linkedin" in this.props.profile) ? this.props.profile.linkedin : '',
         youtube: (this.props.profile && "youtube" in this.props.profile) ? this.props.profile.youtube : '',
         instagram: (this.props.profile && "instagram" in this.props.profile) ? this.props.profile.instagram : '',
+        avatar: (this.props.profile && "user" in this.props.profile) ? this.props.profile.user.avatar : null,
         errors: {},
         displaySocialInputs: false
     }
@@ -87,7 +89,6 @@ class ProfileForm extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-
         //input validation
         const { isValid, errors } = await profileValidation(this.state, this.props.profiles.profile);
         if (!isValid) this.setState(() => ({ errors })); //validation Error
@@ -96,11 +97,49 @@ class ProfileForm extends Component {
         }
     }//END SUBMIT
 
+
+    handleFileUpload = (e) => {
+        //setSTATE
+        this.setState({ avatar: e.target.files[0] });
+        const image = e.target.files[0];
+
+        //display avatar preview
+        const avatar = document.getElementById('avatar');
+        const reader = new FileReader();
+        reader.onload = () => {
+            avatar.style.backgroundImage = "url(" + reader.result + ")"
+        }
+
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }//END FILE UPLOAD
+
     render() {
+        if (this.state.avatar !== null) {
+            console.log(this.state.avatar.replace(/\\/g, "/"));
+        }
         return (
             <React.Fragment>
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit} encType="multipart/form-data">
 
+                    <div className="avatar-input">
+
+                        <div className="avatar-preview" id="avatar" style={{ backgroundImage: `url(${this.state.avatar ? this.state.avatar.replace(/\\/g, "/") : '../img/default-profile1.png'})` }}>
+                        </div>
+                    </div>
+
+                    <div className="input-group mb-5">
+                        <div className="custom-file">
+                            <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" onChange={this.handleFileUpload} />
+                            <label className="custom-file-label" htmlFor="inputGroupFile01">Choose your profile picture </label>
+                        </div>
+                    </div>
+
+                    <hr className="mb-5"></hr>
+
+                    <h2 className="text-center" style={{ fontWeight: 100, marginBottom: "30px" }}>Profile information</h2>
+                    <small className="d-block pb-3">Fields with * are required</small>
                     <TextFieldGroup
                         type="text"
                         className="form-control form-control-lg"
@@ -283,5 +322,6 @@ class ProfileForm extends Component {
 const mapStateToProps = (state) => ({
     profile: state.profiles.profile
 })
+
 
 export default connect(mapStateToProps, null)(ProfileForm);

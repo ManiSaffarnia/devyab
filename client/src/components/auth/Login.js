@@ -9,10 +9,15 @@ class Login extends Component {
     state = {
         email: '',
         password: '',
+        recaptcha: '',
         errors: {},
         flashMessage: this.props.location.state ? this.props.location.state.flashMessage : ''
     }
 
+
+    // componentDidMount() {
+    //     loadReCaptcha();
+    // }
     //=============================================================================================================
     //LIFE CYCLE METHODS
     //=============================================================================================================
@@ -35,6 +40,7 @@ class Login extends Component {
     }//END
 
 
+
     //Flash Message handler 
     onFlashMessage = () => {
         if (this.state.flashMessage) {
@@ -43,6 +49,12 @@ class Login extends Component {
             }, 10000);
         }
     };//END
+
+
+    // //RECAPTCHA
+    // onChangeRecaptcha = (response) => {
+    //     this.setState(() => ({ recaptcha: response }));
+    // }//END 
 
 
     closeFlashMessageHandler = () => {
@@ -111,6 +123,8 @@ class Login extends Component {
                                     onChange={this.onInputChangeHandler}
                                     error={this.state.errors.password}
                                 />
+
+
 
                                 <input type="submit" className="btn btn-info btn-block mt-4" />
                             </form>

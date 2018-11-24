@@ -9,8 +9,8 @@ const ProfileHeader = (props) => {
             <div className="col-md-12">
                 <div className="card card-body bg-info text-white mb-3">
                     <div className="row">
-                        <div className="col-4 col-md-3 m-auto">
-                            <img className="rounded-circle" src={avatar ? avatar : "../img/default-profile1.png"} alt="developer avatar" />
+                        <div className="col-4 col-md-3 m-auto" style={{ textAlign: "center" }}>
+                            <img className="rounded-circle developer-image-lg" src={avatar ? avatar : "../img/default-profile1.png"} alt="developer avatar" />
                         </div>
                     </div>
                     <div className="text-center">

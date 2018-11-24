@@ -11,6 +11,7 @@ class CreateProfile extends Component {
     onSubmitHandler = (data) => {
         const newProfile = {
             handle: data.handle,
+            avatar: data.avatar,
             company: data.company,
             website: data.website,
             location: data.location,
@@ -24,6 +25,7 @@ class CreateProfile extends Component {
             youtube: data.youtube,
             instagram: data.instagram
         }
+
         this.props.createProfile(newProfile, this.props.history);
     };//End
 
@@ -39,7 +41,6 @@ class CreateProfile extends Component {
                                 </Link>
                                 <h1 className="display-4 text-center">Create Your Profile</h1>
                                 <p className="lead text-center">Let's get some information to make your profile stand out</p>
-                                <small className="d-block pb-3">Fields with * are required</small>
                                 <ProfileForm onSubmit={this.onSubmitHandler} profiles={this.props.profiles} />
                             </div>
                         </div>

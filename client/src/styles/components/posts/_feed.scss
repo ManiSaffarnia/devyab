@@ -51,13 +51,15 @@
     
     background-size: cover;
     border-radius: 50%;
+    background-position: center;
+    border: 1px solid #b0afad;
     content: " ";
     display: inline-block;
-    height: 50px;
+    height: 60px;
     margin-right: .5rem;
     position: relative;
     top: 8px;
-    width: 50px;
+    width: 60px;
   }
   .blog-author h3 {
     color: #fff;

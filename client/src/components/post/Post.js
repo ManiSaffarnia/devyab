@@ -59,7 +59,7 @@ class Post extends Component {
                     <div className="blog-header">
                         <div className="blog-author--no-cover">
                             <div>
-                                <h3><div style={{ backgroundImage: `url(${post.user.avatar ? post.user.avatar : '../img/default-profile1.png'})` }}></div>{post.user.name}</h3>
+                                <h3><div style={{ backgroundImage: `url(${post.user.avatar ? post.user.avatar.replace(/\\/g, "/") : '../img/default-profile1.png'})` }}></div>{post.user.name}</h3>
                             </div>
                             {
                                 (auth.id === post.user.id)

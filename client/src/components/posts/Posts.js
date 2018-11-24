@@ -22,7 +22,7 @@ class Posts extends Component {
 
     render() {
         let jsx;
-        if (this.props.posts === null || this.props.isLoading || this.props.posts.length === 0) jsx = <Loading />
+        if (this.props.posts === null || this.props.isLoading) jsx = <Loading />
         else jsx = (<PostFeed posts={this.props.posts} auth={this.props.auth} />)
         return (
             <div className="feed">

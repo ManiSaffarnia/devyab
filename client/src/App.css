@@ -103,6 +103,48 @@ a{
 
 .dashboard, .create-profile{
   padding-top: 25px;
+  margin-bottom: 25px;
+}
+
+/* AVATAR INPUT */
+.avatar-input{
+  display: flex;
+    flex-direction: column-reverse;
+}
+
+.avatar-input input{
+  margin-bottom: 40px;
+  align-self: center;
+}
+
+.avatar-input div{
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+.avatar-preview{
+  background-image: url('./img/default-profile1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 3px solid #868686;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+/* END */
+/* ================================ */
+
+.developer-image-md{
+  width: 150px;
+  height: 150px;
+  border: 2px solid #868686;
+}
+
+.developer-image-lg{
+  width: 200px;
+  height: 200px;
 }
 
 
@@ -137,7 +179,7 @@ a{
 
 
 
-
+/* ========================================== */
 /*LOADING */
 
 .myLoading{

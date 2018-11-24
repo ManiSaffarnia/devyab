@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../../actions/auth';
-
+import isEmpty from '../../validation/isEmpty';
 
 class Navbar extends Component {
+
     render() {
         return (
             <div className="custom-navbar">
@@ -27,7 +28,7 @@ class Navbar extends Component {
                                 {!this.props.isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>}
                                 {this.props.isAuthenticated && <li className="nav-item"> <Link className="nav-link" to="/feed">Post Feed</Link></li>}
                                 {this.props.isAuthenticated && <li className="nav-item"> <Link className="nav-link" to="/dashboard">Dashboard</Link></li>}
-                                {this.props.isAuthenticated && <li className="nav-item"> <a className="nav-link" href="/dashboard" onClick={this.props.logout}><img className="rounded-circle" src="../img/default-profile1.png" alt="default profile" style={{ width: '25px', height: '25px', marginRight: '5px' }} /> Logout </a> </li>}
+                                {this.props.isAuthenticated && <li className="nav-item"> <a className="nav-link" href="/dashboard" onClick={this.props.logout}><img className="rounded-circle" src={(!isEmpty(this.props.profiles.profile)) ? this.props.profiles.profile.user.avatar : "../img/default-profile1.png"} alt="default profile" style={{ width: '25px', height: '25px', marginRight: '5px' }} /> Logout </a> </li>}
                             </ul>
                         </div>
                     </div>
@@ -39,6 +40,7 @@ class Navbar extends Component {
 
 
 const mapStateToProps = (state) => ({
+    profiles: state.profiles,
     isAuthenticated: state.auth.isAuthenticated
 });
 

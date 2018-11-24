@@ -23,7 +23,7 @@ class Comment extends Component {
                 <div className="comment-header">
                     <div className="comment-author--no-cover">
                         <div>
-                            <h4><div style={{ backgroundImage: `url(${avatar ? avatar : '../img/default-profile1.png'})` }}></div>{name}</h4>
+                            <h4><div style={{ backgroundImage: `url(${avatar ? avatar.replace(/\\/g, "/") : '../img/default-profile1.png'})` }}></div>{name}</h4>
                             <small>{moment(date).fromNow()}</small>
                         </div>
 

@@ -7,6 +7,26 @@ export const profileTest = () => ({
 });
 
 //================================================================================================
+//                                          Upload avatar
+//================================================================================================
+export const uploadAvatar = (data) => {
+    return async (dispatch) => {
+        try {
+            const result = await axios.post('api/profiles/me', data);
+
+            if (result.status === 200) {
+
+            }
+        }
+        catch (ex) {
+            if (ex.response.data && ex.response.data.noProfile) {
+            }
+            else if (ex.response.data && ex.response.status !== 404) dispatch(setErrors(ex.response.data));
+        }
+    }
+};//END startGetUserProfile
+
+//================================================================================================
 //                                          GET/SET PROFILE
 //================================================================================================
 export const startGetUserProfile = () => {
@@ -100,10 +120,25 @@ export const setProfileByHandle = (data) => ({
 //================================================================================================
 //                                      CREATE PROFILE
 //================================================================================================
-export const createProfile = (newProfile = {}, history) => {
+export const createProfile = (newProfileData = {}, history) => {
     return async (dispatch) => {
         dispatch(isLoading());
         try {
+            const newProfile = new FormData();
+            newProfile.append("handle", newProfileData.handle);
+            newProfile.append("avatar", newProfileData.avatar);
+            newProfile.append("company", newProfileData.company);
+            newProfile.append("website", newProfileData.website);
+            newProfile.append("location", newProfileData.location);
+            newProfile.append("jobStatus", newProfileData.jobStatus);
+            newProfile.append("skills", newProfileData.skills);
+            newProfile.append("github", newProfileData.github);
+            newProfile.append("bio", newProfileData.bio);
+            newProfile.append("twitter", newProfileData.twitter);
+            newProfile.append("facebook", newProfileData.facebook);
+            newProfile.append("linkedin", newProfileData.linkedin);
+            newProfile.append("youtube", newProfileData.youtube);
+            newProfile.append("instagram", newProfileData.instagram);
             const result = await axios.post('api/profiles/me', newProfile);
 
             if (result.status === 200) {
