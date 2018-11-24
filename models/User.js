@@ -49,7 +49,7 @@ const userSchema = new Schema({
 
 //userSchema Methodes
 userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this.id, name: this.name }, config.get("JWTsecret"), { expiresIn: "7d" }); //bad 7 rooz expire beshe
+  return jwt.sign({ id: this.id, name: this.name, avatar: this.avatar }, (process.env.NODE_ENV === 'production') ? config.get("JWTsecret") : "mani", { expiresIn: "7d" }); //bad 7 rooz expire beshe
 };
 
 

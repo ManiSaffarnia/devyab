@@ -1,4 +1,3 @@
-
 const express = require('express');
 const users = require("../routes/users");
 const posts = require("../routes/posts");
@@ -8,6 +7,7 @@ const jsonparser = require('../middleware/middleware');
 
 module.exports = app => {
   jsonparser(app); //express.json() middleware
+  app.use('/uploads', express.static('uploads'));
 
   app.use("/api/users", users); //setup Users routes
   app.use("/api/posts", posts); //setup Posts routes

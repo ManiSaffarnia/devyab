@@ -5,9 +5,13 @@ const obejectID = require('mongoose').Types.ObjectId;
 const authorization = require('../middleware/authorization');
 const asynchMiddleware = require('../middleware/asynchMiddleware');
 const { Profile } = require('../models/Profile');
+const { User } = require('../models/User');
 const { profileValidation, createProfileData } = require('../validation/profile');
 const experienceValidation = require('../validation/experience');
 const educationValidation = require('../validation/education');
+
+const { upload } = require('../middleware/multer');
+
 
 
 //@route   GET api/profiles/test
@@ -75,8 +79,14 @@ router.get('/all', asynchMiddleware(async (req, res) => {
 //@route   POST api/profiles/me
 //@desc    Create a profile
 //@access  Private route
-router.post('/me', authorization, asynchMiddleware(async (req, res) => {
+router.post('/me', authorization, upload.single('avatar'), asynchMiddleware(async (req, res) => {
 
+  if (req.errors) return res.status(400).json({ errorMessage: "مشکل در اپلود عکس" });
+
+  //avatar
+  const avatarPath = "\\" + req.file.path
+
+  //other profile date
   const input = _.pick(req.body, ['handle', 'company', 'website', 'location', 'jobStatus', 'skills', 'bio', 'github', 'youtube', 'facebook', 'instagram', 'twitter', 'linkedin']);
   input.user = req.user.id;
   //input validation
@@ -88,14 +98,19 @@ router.post('/me', authorization, asynchMiddleware(async (req, res) => {
 
   //create new profile data 
   const newProfileData = createProfileData(input);
-  console.log(newProfileData);
   const newProfile = await new Profile(newProfileData);
-  console.log(newProfile);
+
   //save in database 
   await newProfile.save();
 
+  //save avatar
+  const updateUset = await User.findByIdAndUpdate(req.user.id, { $set: { avatar: avatarPath } }, { new: true });
+  console.log(updateUset);
+
   //send response
   res.json(newProfile);
+
+
 
 }));//END CREATE PROFILE
 
@@ -296,6 +311,17 @@ router.delete('/education/:educationID', authorization, asynchMiddleware(async (
   res.json(userProfile);
 
 }));//END DELETE EDUCATION
+
+
+/* CREATE PROFILE*/
+//@route   POST api/profiles/me/avatar
+//@desc    upload an avatar
+//@access  Private route
+router.post('/me/avatar', (req, res) => {
+  console.log(req.body);
+});
+
+
 
 
 module.exports = router;
