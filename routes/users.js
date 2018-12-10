@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const jwt = require('jsonwebtoken');
+const config = require('config');
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 const { User } = require("../models/User");
@@ -62,7 +63,7 @@ router.post("/register", asynchMiddleware(async (req, res) => {
   });
 
   //create token for Email verification
-  newUser.token = await jwt.sign({ user: _.pick(newUser, 'id') }, 'mani');
+  newUser.token = await jwt.sign({ user: _.pick(newUser, 'id') }, config.get('JWTsecret'));
 
   //save in database
   await newUser.save();
@@ -172,7 +173,7 @@ router.get('/verification/:token', async (req, res) => {
 
   try {
     //decode token
-    const decodeUser = jwt.verify(token, 'mani');
+    const decodeUser = jwt.verify(token, config.get('JWTsecret'));
 
     //find user by this id
     const user = await User.findById(decodeUser.user.id);

@@ -9,13 +9,13 @@ module.exports = async (email, url) => {
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: (process.env.NODE_ENV === 'production') ? config.get("emailUsername") : "hakhamanish.kourosh@gmail.com",//'hakhamanish.kourosh@gmail.com'
-            pass: (process.env.NODE_ENV === 'production') ? config.get("emailPassword") : "zerohour"//'zerohour'
+            user: (process.env.NODE_ENV === 'production') ? config.get("emailUsername") : "",
+            pass: (process.env.NODE_ENV === 'production') ? config.get("emailPassword") : ""
         }
     });
 
     const mailOptions = {
-        from: '"Devyab" <hakhamanish.kourosh@gmail.com>', // sender address
+        from: `"Devyab" <${config.get("emailUsername")}>`, // sender address
         to: `${email}`, // list of receivers
         subject: 'Email Verification', // Subject line
         //text: 'Hello world?', // plain text body
