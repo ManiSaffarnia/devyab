@@ -188,7 +188,7 @@ router.get('/verification/:token', async (req, res) => {
       //   msg: 'اکانت شما فعال شد',
       //   data: updatedUser
       // });
-      res.redirect('http://localhost:3000/login');
+      res.redirect((process.env.NODE_ENV === 'production') ? 'https://devyab-mani.herokuapp.com/login' : 'http://localhost:3000/login');
     }
     else {
       console.log('error INJA');
