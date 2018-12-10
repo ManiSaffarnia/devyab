@@ -9,8 +9,8 @@ module.exports = async (email, url) => {
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: (process.env.NODE_ENV === 'production') ? config.get("emailUsername") : "",
-            pass: (process.env.NODE_ENV === 'production') ? config.get("emailPassword") : ""
+            user: config.get("emailUsername"),
+            pass: config.get("emailPassword")
         }
     });
 
@@ -25,7 +25,7 @@ module.exports = async (email, url) => {
     // send mail with defined transport object
     await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            return console.log("EMAIL ERROR! ", error);
         }
         console.log('Message sent: %s', info.messageId);
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
