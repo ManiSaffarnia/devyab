@@ -3,6 +3,7 @@
     "googleClientID": "DEVYAV_GOOGLE_CLIENT_ID",
     "googleClientSecret": "DEVYAB_GOOGLE_CLIENT_SECRET",
     "googleCallBack": "DEVYAB_GOOGLE_CALLBACK",
+    "googleRefresherToken": "DEVYAB_GOOGLE_REFRESHER_TOKEN",
     "JWTsecret": "DEVYAB_JWT_SECRET",
     "emailUsername": "DEVYAB_EMAIL_USERNAME",
     "emailPassword": "DEVYAB_EMAIL_PASSWORD"

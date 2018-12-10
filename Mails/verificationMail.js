@@ -8,9 +8,16 @@ module.exports = async (email, url) => {
         host: 'smtp.gmail.com',
         port: 465,
         secure: true, // true for 465, false for other ports
+        // auth: {
+        //     user: config.get("emailUsername"),
+        //     pass: config.get("emailPassword")
+        // },
         auth: {
+            type: "OAuth2",
             user: config.get("emailUsername"),
-            pass: config.get("emailPassword")
+            clientId: config.get("googleClientID"),
+            clientSecret: config.get("googleClientSecret"),
+            refreshToken: config.get("googleRefresherToken")
         }
     });
 

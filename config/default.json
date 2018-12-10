@@ -3,6 +3,7 @@
     "googleClientID": "",
     "googleClientSecret": "",
     "googleCallBack": "",
+    "googleRefresherToken": "",
     "JWTsecret": "",
     "emailUsername": "",
     "emailPassword": ""
