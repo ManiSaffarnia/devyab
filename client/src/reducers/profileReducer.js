@@ -18,7 +18,7 @@ const profileReducer = (state = profileDefaultState, action) => {
         case 'SET_IS_LOADING':
             return {
                 ...state,
-                loading: true
+                loading: !state.loading
             };
         case 'SET_ALL_DEVELOPERS_PROFILE':
             return {

@@ -15,15 +15,16 @@ class Login extends Component {
     }
 
 
-    // componentDidMount() {
-    //     loadReCaptcha();
-    // }
     //=============================================================================================================
     //LIFE CYCLE METHODS
     //=============================================================================================================
     componentWillReceiveProps(nextProps) {
-        if (nextProps.errors) {
-            this.setState(() => ({ errors: nextProps.errors }));
+        if (nextProps.errors.errorMessage) {
+            this.setState({
+                errors: {
+                    validation: nextProps.errors.errorMessage.message
+                }
+            })
         }
     }//END
 
@@ -50,19 +51,27 @@ class Login extends Component {
         }
     };//END
 
+    //Error Message handler 
+    onErrorMessage = () => {
+        if (this.state.errors.validation) {
+            window.setTimeout(() => {
+                this.closeErrorMessageHandler();
+            }, 10000);
+        }
+    };//END
 
-    // //RECAPTCHA
-    // onChangeRecaptcha = (response) => {
-    //     this.setState(() => ({ recaptcha: response }));
-    // }//END 
-
-
+    //Flash MESSAGE
     closeFlashMessageHandler = () => {
         this.setState(() => ({ flashMessage: '' }));
     }
 
+    //ERROR MESSAGE
+    closeErrorMessageHandler = () => {
+        this.setState(() => ({ errors: {} }));
+    }
 
 
+    //SUBMIT
     onSubmitHandler = async (e) => {
         e.preventDefault();
 
@@ -86,48 +95,62 @@ class Login extends Component {
             this.onFlashMessage();
         }
 
+        if (this.state.errors.validation) {
+            this.onErrorMessage();
+        }
         return (
             <div className="login">
-                <div className="container">
+                <div className="login-container">
+                    <div className="container">
 
-                    {this.state.flashMessage &&
-                        <div className="row" id="flashMessage" style={{ justifyContent: "center" }}>
-                            <div className="alert alert-info alert-dismissible fade show" style={{ transition: 'opacity 1s' }}>
-                                <button type="button" className="close" id="close" data-dismiss="alert" onClick={this.closeFlashMessageHandler}>&times;</button>
-                                <strong>Info!</strong> {this.state.flashMessage}.
-                            </div>
+                        {this.state.flashMessage &&
+                            <div className="row" id="flashMessage" style={{ justifyContent: "center" }}>
+                                <div className="alert alert-info alert-dismissible fade show" style={{ transition: 'opacity 1s' }}>
+                                    <button type="button" className="close" id="close" data-dismiss="alert" onClick={this.closeFlashMessageHandler}>&times;</button>
+                                    <strong>Info!</strong> {this.state.flashMessage}.
                         </div>
-                    }
+                            </div>
+                        }
 
-                    <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Log In</h1>
-                            <p className="lead text-center">Sign in to your DevConnector account</p>
-                            <form onSubmit={this.onSubmitHandler} noValidate>
-                                <TextFieldGroup
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email Address"
-                                    className="form-control form-control-lg"
-                                    value={this.state.email}
-                                    onChange={this.onInputChangeHandler}
-                                    error={this.state.errors.email}
-                                />
+                        {this.state.errors.validation &&
+                            <div className="row" id="flashMessage" style={{ justifyContent: "center" }}>
+                                <div className="alert alert-danger alert-dismissible fade show" style={{ transition: 'opacity 1s' }}>
+                                    <button type="button" className="close" id="close" data-dismiss="alert" onClick={this.closeErrorMessageHandler}>&times;</button>
+                                    <strong>Error!</strong> {this.state.errors.validation}.
+                        </div>
+                            </div>
+                        }
 
-                                <TextFieldGroup
-                                    type="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    className="form-control form-control-lg"
-                                    value={this.state.password}
-                                    onChange={this.onInputChangeHandler}
-                                    error={this.state.errors.password}
-                                />
+                        <div className="row">
+                            <div className="col-md-8 m-auto">
+                                <h1 className="display-4 text-center">Log In</h1>
+                                <p className="lead text-center">Sign in to your DevConnector account</p>
+                                <form onSubmit={this.onSubmitHandler} noValidate>
+                                    <TextFieldGroup
+                                        type="email"
+                                        name="email"
+                                        placeholder="Email Address"
+                                        className="form-control form-control-lg"
+                                        value={this.state.email}
+                                        onChange={this.onInputChangeHandler}
+                                        error={this.state.errors.email}
+                                    />
+
+                                    <TextFieldGroup
+                                        type="password"
+                                        name="password"
+                                        placeholder="Password"
+                                        className="form-control form-control-lg"
+                                        value={this.state.password}
+                                        onChange={this.onInputChangeHandler}
+                                        error={this.state.errors.password}
+                                    />
 
 
 
-                                <input type="submit" className="btn btn-info btn-block mt-4" />
-                            </form>
+                                    <input type="submit" className="btn btn-info btn-block mt-4" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

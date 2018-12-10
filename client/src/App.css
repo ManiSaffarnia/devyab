@@ -28,14 +28,41 @@ a{
   cursor: pointer;
 }
 
-.custom-container,.App,.root{
+.App{
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-container,.root{
   height: 100vh;
 }
-.login,.register,.dashboard,.Developers{
-  height: 86.74%;
-  min-height: 700px;
+.login,.register{
+  height: 87%;
+  min-height: 833px;
   display: flex;
+  flex-direction: column;
 }
+.dashboard{
+  height: 87%;
+  min-height: 805px;
+  display: flex;
+  flex-direction: column;
+}
+.sign-up{
+  margin: auto;
+}
+.Developers{
+  height: 87%;
+  min-height: 833px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container{
+  margin: auto;
+  width: 100%;
+}
+
 .profile{
   margin-top: 20px;
   margin-bottom: 25px;
@@ -45,6 +72,9 @@ a{
   min-height: 1150px;
   display: flex;
 }
+.landing-container{
+  height: 87vh;
+}
 
 .add-education,.add-experience{
   min-height: 950px;
@@ -53,11 +83,14 @@ a{
 
 .custom-navbar{
   height: 5.8%;
-  min-height: 59px;
+  min-height: 56px;
 }
 .custom-footer{
-  height: 7.5%;
-  min-height: 72px;
+  height: 6.5%;
+  min-height: 70px;
+}
+.custom-footer footer{
+  padding: 23px;
 }
 
 .input-group-prepend{
@@ -67,12 +100,14 @@ a{
 
 
 .landing {
-  position: relative;
-  background: url('./img/showcase.jpg') no-repeat;
+  display: flex;
+  flex-direction: column;
+  background-image: url('./img/showcase.jpg');
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 87vh;
-  margin-bottom: -50px;
+  height: 100%;
+  min-height: 828px;
 }
 
 .landing-inner {
@@ -81,9 +116,6 @@ a{
 
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
 }

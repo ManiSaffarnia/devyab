@@ -68,7 +68,8 @@ router.post("/register", asynchMiddleware(async (req, res) => {
   await newUser.save();
 
   //send a verification Email
-  const url = `http://localhost:3000/api/users/verification/${newUser.token}`;
+  console.log(req.hostname);
+  const url = `http://localhost:4000/api/users/verification/${newUser.token}`;
   await mail(newUser.email, url);
 
   //send response to client
@@ -182,12 +183,14 @@ router.get('/verification/:token', async (req, res) => {
 
       //send response to user
       /*TODO: REDIRECT USER TO LOGIN PAGE */
-      res.json({
-        msg: 'اکانت شما فعال شد',
-        data: updatedUser
-      });
+      // res.json({
+      //   msg: 'اکانت شما فعال شد',
+      //   data: updatedUser
+      // });
+      res.redirect('http://localhost:3000/login');
     }
     else {
+      console.log('error INJA');
       return res.status(400).send('توکن فرستاده شده با توکن ذخیره شده متفاوت است');
     }
   }

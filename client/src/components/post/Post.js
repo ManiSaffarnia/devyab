@@ -42,7 +42,7 @@ class Post extends Component {
         const newPost = {
             text: data.text,
             name: this.props.auth.name,
-            avatar: this.props.profile.user.avatar,
+            avatar: (this.props.profile.user.avatar) ? this.props.profile.user.avatar : '../img/default-profile1.png',
             postID: this.props.post._id,
         }
         this.props.addComment(newPost);
@@ -90,10 +90,14 @@ class Post extends Component {
                 </div>
 
 
+
+
                 {/**COMMET SECTION*/}
                 <div className="comment-container">
                     {/**COMMET FORM */}
-                    <PostForm onSubmit={this.onCommentSubmit} />
+                    {!isEmpty(this.props.profile) && <PostForm onSubmit={this.onCommentSubmit} />}
+                    {isEmpty(this.props.profile) && <p className="alert alert-primary mt-3  text-center">You should complete your profile to comment a post</p>}
+
 
                     {/**COMMENT LSIT */}
                     <CommentList comments={this.props.comments} />

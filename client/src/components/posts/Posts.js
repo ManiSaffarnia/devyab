@@ -4,6 +4,7 @@ import Loading from '../Loading';
 import PostForm from '../form-component/PostForm';
 import { startAddPost, startFetchAllPosts } from '../../actions/posts';
 import PostFeed from './PostFeed';
+import isEmpty from '../../validation/isEmpty';
 
 class Posts extends Component {
 
@@ -15,7 +16,7 @@ class Posts extends Component {
         const newPost = {
             text: data.text,
             name: this.props.auth.name,
-            avatar: this.props.auth.avatar,
+            avatar: this.props.profile.user.avatar,
         }
         this.props.addPost(newPost);
     }
@@ -30,8 +31,10 @@ class Posts extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             {/**Post Form */}
-                            <PostForm onSubmit={this.onSubmit} />
-
+                            <div className="blog-container">
+                                {!isEmpty(this.props.profile) && <PostForm onSubmit={this.onSubmit} />}
+                                {isEmpty(this.props.profile) && <p className="alert alert-primary mt-3 text-center">You should complete your profile before wtite a post</p>}
+                            </div>
                             {/**Post Feed */}
                             {jsx}
                         </div>
@@ -44,6 +47,7 @@ class Posts extends Component {
 
 const mapStateToProps = (state) => ({
     auth: state.auth.user,
+    profile: state.profiles.profile,
     posts: state.posts.posts,
     isLoading: state.posts.loading
 })

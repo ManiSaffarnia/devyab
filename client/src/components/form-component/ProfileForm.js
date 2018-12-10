@@ -25,7 +25,8 @@ class ProfileForm extends Component {
         linkedin: (this.props.profile && "linkedin" in this.props.profile) ? this.props.profile.linkedin : '',
         youtube: (this.props.profile && "youtube" in this.props.profile) ? this.props.profile.youtube : '',
         instagram: (this.props.profile && "instagram" in this.props.profile) ? this.props.profile.instagram : '',
-        avatar: (this.props.profile && "user" in this.props.profile) ? this.props.profile.user.avatar : null,
+        avatar: null,
+        avatarPath: (this.props.profile && "user" in this.props.profile) ? this.props.profile.user.avatar : null,
         errors: {},
         displaySocialInputs: false
     }
@@ -107,7 +108,7 @@ class ProfileForm extends Component {
         const avatar = document.getElementById('avatar');
         const reader = new FileReader();
         reader.onload = () => {
-            avatar.style.backgroundImage = "url(" + reader.result + ")"
+            this.setState({ avatarPath: reader.result });
         }
 
         if (image) {
@@ -116,16 +117,13 @@ class ProfileForm extends Component {
     }//END FILE UPLOAD
 
     render() {
-        if (this.state.avatar !== null) {
-            console.log(this.state.avatar.replace(/\\/g, "/"));
-        }
         return (
             <React.Fragment>
                 <form onSubmit={this.onSubmit} encType="multipart/form-data">
 
                     <div className="avatar-input">
 
-                        <div className="avatar-preview" id="avatar" style={{ backgroundImage: `url(${this.state.avatar ? this.state.avatar.replace(/\\/g, "/") : '../img/default-profile1.png'})` }}>
+                        <div className="avatar-preview" id="avatar" style={{ backgroundImage: `url(${this.state.avatarPath ? this.state.avatarPath.replace(/\\/g, "/") : '../img/default-profile1.png'})` }}>
                         </div>
                     </div>
 

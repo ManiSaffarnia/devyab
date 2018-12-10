@@ -35,14 +35,14 @@ ReactDOM.render(<Loading />, document.getElementById('root'));
 
 //auth process
 const user = authentication(store);
-console.log(user);
+//console.log(user);
 if (user) {
     store.dispatch(loginUser(user));
     store.dispatch(startGetUserProfile())
-    console.log('Login');
+    //console.log('Login');
     renderApp();
 } else {
     store.dispatch(logout());
-    console.log('logOUT');
+    //console.log('logOUT');
     renderApp();
 }

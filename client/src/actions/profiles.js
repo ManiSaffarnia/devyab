@@ -6,25 +6,7 @@ export const profileTest = () => ({
     type: 'PROFILE'
 });
 
-//================================================================================================
-//                                          Upload avatar
-//================================================================================================
-export const uploadAvatar = (data) => {
-    return async (dispatch) => {
-        try {
-            const result = await axios.post('api/profiles/me', data);
 
-            if (result.status === 200) {
-
-            }
-        }
-        catch (ex) {
-            if (ex.response.data && ex.response.data.noProfile) {
-            }
-            else if (ex.response.data && ex.response.status !== 404) dispatch(setErrors(ex.response.data));
-        }
-    }
-};//END startGetUserProfile
 
 //================================================================================================
 //                                          GET/SET PROFILE
@@ -36,7 +18,7 @@ export const startGetUserProfile = () => {
             const result = await axios.get('/api/profiles/me');
 
             if (result.status === 200) {
-                //console.log(result.data);
+                console.log(result.data);
                 dispatch(getUserProfile(result.data));
             }
         }

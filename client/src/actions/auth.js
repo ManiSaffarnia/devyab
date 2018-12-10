@@ -5,7 +5,7 @@ import { isLoading } from './profiles';
 
 //start register a user
 export const startRegister = ({ name = '', email = '', password = '', passwordConfirm = '' } = {}, history) => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         dispatch(isLoading());
         const newUser = {
             name,

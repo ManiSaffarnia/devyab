@@ -9,9 +9,9 @@ class Navbar extends Component {
     render() {
         return (
             <div className="custom-navbar">
-                <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+                <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
                     <div className="container">
-                        <Link className="navbar-brand" to="/dashboard">DevYab</Link>
+                        <Link className="navbar-brand" to={!this.props.isAuthenticated ? '/' : "/dashboard"}>DevYab</Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
                             <span className="navbar-toggler-icon"></span>
                         </button>

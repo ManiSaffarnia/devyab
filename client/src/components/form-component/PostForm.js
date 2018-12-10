@@ -30,7 +30,7 @@ class PostForm extends Component {
 
     render() {
         return (
-            <div className="blog-container">
+            <div className={this.props.nameOfClass}>
                 <div className="card-header bg-info text-white">
                     Say Somthing...
                     </div>
@@ -45,6 +45,7 @@ class PostForm extends Component {
                     />
                     <button type="submit" className="btn btn-info">Submit</button>
                 </form>
+                <hr></hr>
             </div>
         )
     }

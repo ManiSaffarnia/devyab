@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Dialog from '@material-ui/core/Dialog';
 import { startAddLike, startRemoveLike, startDeletePost } from '../../actions/posts';
 import { Link } from 'react-router-dom';
+import DeleteAlert from '../DeleteAlert';
 const moment = require('moment');
 
 
@@ -10,7 +12,8 @@ const moment = require('moment');
 class PostItem extends Component {
 
     state = {
-        isLiked: false
+        isLiked: false,
+        open: false
     }
 
 
@@ -30,6 +33,14 @@ class PostItem extends Component {
             this.setState(() => ({ isLiked: false }));
             this.props.removeLike(this.props.post._id, this.props.auth.id);
         }
+    };//end
+
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
     };
 
 
@@ -39,10 +50,15 @@ class PostItem extends Component {
     // };
 
 
-    //DELETE
+    //DELETE 
     onDeleteButtonClickedHandler = (e) => {
-        if (window.confirm('Are you sure about deleting This post?')) this.props.deletePost(this.props.post._id);
+        this.setState(() => ({ open: true }));
     };
+
+    //DELET APPROVED
+    onDeleteApproved = () => {
+        this.props.deletePost(this.props.post._id);
+    }
 
 
     render() {
@@ -83,6 +99,18 @@ class PostItem extends Component {
                         {/**LIKE */}
                         <li className="shares"><button className={this.state.isLiked ? "blog-button-liked" : "blog-button"} onClick={this.likeHandler}><i className="fas fa-heart" style={{ marginRight: "1px" }}></i>{this.props.post.likes.length > 1 ? "likes" : "like"} {this.props.post.likes.length}</button></li>
                     </ul>
+                </div>
+
+                {/** ALERT*/}
+                <div>
+                    <Dialog
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DeleteAlert opne={this.handleClickOpen} close={this.handleClose} title="Delete Post" message="Are you sure about deleting this post? This operation in permenant!" delete={this.onDeleteApproved} />
+                    </Dialog>
                 </div>
             </div>
         )
