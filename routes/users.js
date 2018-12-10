@@ -70,7 +70,7 @@ router.post("/register", asynchMiddleware(async (req, res) => {
 
   //send a verification Email
   console.log(req.hostname);
-  const url = `http://localhost:4000/api/users/verification/${newUser.token}`;
+  const url = (process.env.NODE_ENV === 'production') ? `https://devyab-mani.herokuapp.com/api/users/verification/${newUser.token}` : `http://localhost:4000/api/users/verification/${newUser.token}`;
   await mail(newUser.email, url);
 
   //send response to client
