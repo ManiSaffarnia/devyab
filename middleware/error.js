@@ -7,6 +7,6 @@ module.exports = app => {
       return res.status(400).send('داداش چی کار میکنی؟ یکم دقت کن مشتی، داده نامناسب فرستادی! یه داده درست بفرست سمت سرور تا عشق کنیم')
     }
     console.log(err);
-    res.status(500).send('Something broke!');
+    res.status(500).send('Something broke!', err);
   });
 };
