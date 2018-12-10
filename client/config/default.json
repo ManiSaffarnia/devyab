@@ -1,4 +1,5 @@
 {
     "gitHubClientID": "",
-    "gitHubClientSecret": ""
+    "gitHubClientSecret": "",
+    "JWTsecret": ""
 }

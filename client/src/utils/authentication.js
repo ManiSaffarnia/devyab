@@ -1,5 +1,6 @@
 import setAuthToken from './setAuthToken';
 import jwt from 'jsonwebtoken';
+import config from 'config';
 
 const authentication = () => {
     const token = localStorage.getItem('jwtToken-devyab');
@@ -7,7 +8,7 @@ const authentication = () => {
 
     //token vojood dare
     try {
-        const decodedData = jwt.verify(token, 'mani');
+        const decodedData = jwt.verify((process.env.NODE_ENV === 'production') ? config.get('') : token, 'mani');
 
         //check expiration time
         const now = Date.now() / 1000;

@@ -1,4 +1,5 @@
 {
     "gitHubClientID": "DEVYAV_GITHUB_CLIENT_ID",
-    "gitHubClientSecret": "DEVYAB_GITHUB_CLIENT_SECRET"
+    "gitHubClientSecret": "DEVYAB_GITHUB_CLIENT_SECRET",
+    "JWTsecret": "DEVYAB_JWT_SECRET"
 }
