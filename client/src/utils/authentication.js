@@ -8,7 +8,7 @@ const authentication = () => {
 
     //token vojood dare
     try {
-        const decodedData = jwt.verify((process.env.NODE_ENV === 'production') ? config.get('') : token, 'mani');
+        const decodedData = jwt.verify((process.env.NODE_ENV === 'production') ? config.get('JWTsecret') : token, 'mani');
 
         //check expiration time
         const now = Date.now() / 1000;
