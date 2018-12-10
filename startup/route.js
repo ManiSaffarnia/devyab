@@ -4,10 +4,15 @@ const posts = require("../routes/posts");
 const profiles = require("../routes/profiles");
 const error = require('../middleware/error');
 const jsonparser = require('../middleware/middleware');
+const path = require('path');
 
 module.exports = app => {
   jsonparser(app); //express.json() middleware
   app.use('/uploads', express.static('uploads'));
+
+  const buildPath = path.join(__dirname, 'client', 'build');
+  app.use(express.static(buildPath));
+
 
   app.use("/api/users", users); //setup Users routes
   app.use("/api/posts", posts); //setup Posts routes
