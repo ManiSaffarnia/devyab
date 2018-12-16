@@ -8,8 +8,7 @@ const authentication = () => {
 
     //token vojood dare
     try {
-        const jwtToken = (process.env.NODE_ENV === 'production') ? process.env.DEVYAB_JWT_SECRET : 'mani';
-        console.log("DEVYAB_JWT_SECRET = ", process.env.DEVYAB_JWT_SECRET);
+        const jwtToken = (process.env.NODE_ENV === 'production') ? `${process.env.REACT_APP_JWT_SECRET}` : 'mani';
         const decodedData = jwt.verify(token, jwtToken);
 
         //check expiration time
