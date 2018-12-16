@@ -11,7 +11,7 @@ class CreateProfile extends Component {
     onSubmitHandler = (data) => {
         const newProfile = {
             handle: data.handle,
-            avatar: data.avatar,
+            avatar: (data.avatar) ? data.avatar : '',
             company: data.company,
             website: data.website,
             location: data.location,
@@ -26,6 +26,7 @@ class CreateProfile extends Component {
             instagram: data.instagram
         }
 
+        console.log(newProfile.avatar);
         this.props.createProfile(newProfile, this.props.history);
     };//End
 

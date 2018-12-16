@@ -80,18 +80,20 @@ router.get('/all', asynchMiddleware(async (req, res) => {
 //@desc    Create a profile
 //@access  Private route
 router.post('/me', authorization, upload.single('avatar'), asynchMiddleware(async (req, res) => {
-
+  console.log('inja');
   if (req.errors) return res.status(400).json({ errorMessage: "مشکل در اپلود عکس" });
 
+  let avatarPath;
   //avatar
-  const avatarPath = "\\" + req.file.path
+  if (req.file) avatarPath = "\\" + req.file.path;
+  else avatarPath = `\\uploads\\default-profile1.png`;
 
   //other profile date
   const input = _.pick(req.body, ['handle', 'company', 'website', 'location', 'jobStatus', 'skills', 'bio', 'github', 'youtube', 'facebook', 'instagram', 'twitter', 'linkedin']);
   input.user = req.user.id;
   //input validation
   const { errors, isValid } = profileValidation(input);
-  if (!isValid) return res.status(400).json({ errorMessage: errors }); //valisation failed
+  if (!isValid) return res.status(400).json({ ...errors }); //valisation failed
 
   //check if this handle exist
   if (await Profile.findOne({ handle: input.handle })) return res.status(400).json({ errorMessage: "در حال حاضر چنین هندلی وجود دارد." });
@@ -177,7 +179,7 @@ router.post('/experience', authorization, asynchMiddleware(async (req, res) => {
 
   //input validation
   const { errors, isValid } = experienceValidation(input);
-  if (!isValid) return res.status(400).json({ errorMessage: errors }); //valisation failed
+  if (!isValid) return res.status(400).json({ ...errors }); //valisation failed
 
   const newExperience = {
     title: input.title,
@@ -252,7 +254,7 @@ router.post('/education', authorization, asynchMiddleware(async (req, res) => {
 
   //input validation
   const { errors, isValid } = educationValidation(input);
-  if (!isValid) return res.status(400).json({ errorMessage: errors }); //valisation failed
+  if (!isValid) return res.status(400).json({ ...errors }); //valisation failed
 
   const newEducation = {
     schoolTitle: input.schoolTitle,

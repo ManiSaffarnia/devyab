@@ -124,7 +124,6 @@ export const createProfile = (newProfileData = {}, history) => {
             const result = await axios.post('api/profiles/me', newProfile);
 
             if (result.status === 200) {
-                console.log(result.data);
                 dispatch(isLoading());
                 history.push({
                     pathname: '/dashboard',
@@ -133,6 +132,7 @@ export const createProfile = (newProfileData = {}, history) => {
             }
         }
         catch (ex) {
+            dispatch(isLoading());
             if (ex.response.data) dispatch(setErrors(ex.response.data));
         }
     }
@@ -206,6 +206,7 @@ export const createExperience = (experience = {}, history) => {
             }
         }
         catch (ex) {
+            dispatch(isLoading());
             if (ex.response.data) dispatch(setErrors(ex.response.data));
         }
     }
@@ -255,6 +256,7 @@ export const createEducation = (education = {}, history) => {
             }
         }
         catch (ex) {
+            dispatch(isLoading());
             if (ex.response.data) dispatch(setErrors(ex.response.data));
         }
     }

@@ -25,6 +25,13 @@ class CreateEducation extends Component {
         errors: {}
     }
 
+    //life Cycle method
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState(() => ({ errors: nextProps.errors }));
+        }
+    }//END
+
     //On Input Change handler
     onInputChangeHandler = (e) => {
         const inputData = e.target.value;
@@ -62,7 +69,6 @@ class CreateEducation extends Component {
                     errors: { ...clearedError }
                 }
             })
-
         }
     };//END 
 
@@ -88,10 +94,6 @@ class CreateEducation extends Component {
             }
             this.props.createEducation(education, this.props.history);
         }
-
-
-        console.log(this.state);
-
     };//End
 
 
@@ -223,7 +225,7 @@ class CreateEducation extends Component {
 
 
 const mapStateToProps = (state) => ({
-
+    errors: state.errors
 });
 
 const mapDispatchToProps = (dispatch) => ({

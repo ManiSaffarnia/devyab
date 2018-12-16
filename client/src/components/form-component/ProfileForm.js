@@ -33,11 +33,14 @@ class ProfileForm extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log("nextProps", nextProps);
         if (nextProps.profile) {
             this.setState(() => ({
                 ...nextProps.profile
             }))
+        }
+
+        if (nextProps.errors && !nextProps.errors.errorMessage) {
+            this.setState(() => ({ errors: nextProps.errors }));
         }
     }//END
 
@@ -75,7 +78,6 @@ class ProfileForm extends Component {
                     errors: { ...clearedError }
                 }
             })
-
         }
     };//END 
 
@@ -117,6 +119,7 @@ class ProfileForm extends Component {
     }//END FILE UPLOAD
 
     render() {
+        console.log(this.state.errors);
         return (
             <React.Fragment>
                 <form onSubmit={this.onSubmit} encType="multipart/form-data">
@@ -318,7 +321,8 @@ class ProfileForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    profile: state.profiles.profile
+    profile: state.profiles.profile,
+    errors: state.errors
 })
 
 

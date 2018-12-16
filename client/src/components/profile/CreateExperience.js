@@ -21,6 +21,13 @@ class CreateExperience extends Component {
         errors: {}
     }
 
+    //life Cycle method
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState(() => ({ errors: nextProps.errors }));
+        }
+    }//END
+
     //On Input Change handler
     onInputChangeHandler = (e) => {
         const inputFieldName = e.target.name;
@@ -49,7 +56,6 @@ class CreateExperience extends Component {
                     errors: { ...clearedError }
                 }
             })
-
         }
     };//END 
 
@@ -61,7 +67,6 @@ class CreateExperience extends Component {
         //validation
         const { isValid, errors } = experienceValidation(this.state);
         if (!isValid) this.setState(() => ({ errors })); //validation error dashte
-
         else {
             const experience = {
                 title: this.state.title,
