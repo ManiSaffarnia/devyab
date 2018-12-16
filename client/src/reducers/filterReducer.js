@@ -6,7 +6,7 @@ const filterDefaultState = {
 const filterReducer = (state = filterDefaultState, action) => {
     switch (action.type) {
         case 'FILTER':
-            return console.log('filter reducer');
+            return console.log('test reducer');
         default:
             return state;
     }//end switch

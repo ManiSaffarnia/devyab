@@ -27,8 +27,8 @@ const authentication = () => {
         return decodedData;
     }
     catch (ex) {
-        console.log(ex);
-        console.log('verify nashod');
+        //console.log(ex);
+        //console.log('verify nashod');
         localStorage.removeItem('jwtToken-devyab');
         return false
     }

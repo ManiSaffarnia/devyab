@@ -7,8 +7,6 @@ const profileDefaultState = {
 
 const profileReducer = (state = profileDefaultState, action) => {
     switch (action.type) {
-        case 'PROFILE':
-            return console.log('profile reducer');
         case 'GET_CURRENT_USER_PROFILE':
             return {
                 ...state,

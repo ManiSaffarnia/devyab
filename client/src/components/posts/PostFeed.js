@@ -2,9 +2,6 @@ import React from 'react'
 import PostItem from './PostItem';
 
 const PostFeed = (props) => {
-    console.log(props.posts);
-
-
     return (
         <div className="posts">
             {props.posts.length > 0 && props.posts.map((post) => {

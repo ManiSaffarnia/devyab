@@ -22,8 +22,8 @@ export const educationValidation = ({ schoolTitle, degree, fieldOfStudy, GPA, st
     if (!isEmpty(endDate)) { //AGAR END DATE KHALI NABOOD ....
         const startDateVALUE = new Date(startDate);
         const endDateVALUE = new Date(endDate);
-        console.log("start date = ", startDateVALUE)
-        console.log("end date = ", endDateVALUE)
+        //console.log("start date = ", startDateVALUE)
+        //console.log("end date = ", endDateVALUE)
         if (startDateVALUE > endDateVALUE) errors.endDate = 'The end date of job could not be before the start date of it';
     }
 

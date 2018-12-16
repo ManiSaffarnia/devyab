@@ -18,7 +18,7 @@ export const startGetUserProfile = () => {
             const result = await axios.get('/api/profiles/me');
 
             if (result.status === 200) {
-                console.log(result.data);
+                //console.log(result.data);
                 dispatch(getUserProfile(result.data));
             }
         }
@@ -148,7 +148,7 @@ export const editProfile = (editedProfile = {}, history) => {
             const result = await axios.put('api/profiles/me', editedProfile);
 
             if (result.status === 200) {
-                console.log(result.data);
+                //console.log(result.data);
                 history.push({
                     pathname: '/dashboard',
                     state: { flashMessage: 'Your profile was edited SUCCESSFULLY' }
@@ -171,7 +171,7 @@ export const deleteProfile = (history) => {
             const result = await axios.delete('api/profiles/me');
 
             if (result.status === 200) {
-                console.log(result.data);
+                //console.log(result.data);
                 history.push({
                     pathname: '/dashboard',
                     state: { flashMessage: 'Success! Your profile was deleted!' }

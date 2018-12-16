@@ -16,7 +16,6 @@ export const profileValidation = async ({ handle, jobStatus, skills }, profileHa
         catch (ex) {
             if (ex.response.status !== 404 && ex.response.data) {
                 console.log(ex.response.date);
-
             }
         }
     }

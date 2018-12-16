@@ -66,7 +66,7 @@ export const startLogin = ({ email = '', password = '' } = {}) => {
             dispatch(isLoading());
             const result = await axios.post('/api/users/login', { email, password });
             if (result.status === 200) {
-                console.log(result.data);
+                //console.log(result.data);
 
                 const token = result.headers["x-auth-token"];
 

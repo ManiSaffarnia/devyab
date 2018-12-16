@@ -119,7 +119,6 @@ class ProfileForm extends Component {
     }//END FILE UPLOAD
 
     render() {
-        console.log(this.state.errors);
         return (
             <React.Fragment>
                 <form onSubmit={this.onSubmit} encType="multipart/form-data">

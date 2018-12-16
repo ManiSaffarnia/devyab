@@ -26,7 +26,6 @@ class CreateProfile extends Component {
             instagram: data.instagram
         }
 
-        console.log(newProfile.avatar);
         this.props.createProfile(newProfile, this.props.history);
     };//End
 

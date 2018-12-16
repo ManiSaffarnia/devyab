@@ -20,7 +20,7 @@ class PostForm extends Component {
         e.preventDefault();
         //input validation
         const { isValid, errors } = postValidation(this.state.text);
-        console.log(isValid);
+        //console.log(isValid);
         if (!isValid) this.setState(() => ({ errors })); //validation Error
         else {
             this.props.onSubmit(this.state);
